@@ -1,13 +1,13 @@
 <?php
-$this->router->addRoute(['GET', 'POST'], '/signup', ['\Jarzon\UserPack\Controller\User', 'signup']);
-$this->router->addRoute(['GET', 'POST'], '/signin', ['\Jarzon\UserPack\Controller\User', 'signin']);
-$this->router->addRoute(['GET', 'POST'], '/signout', ['\Jarzon\UserPack\Controller\User', 'signout']);
+$this->router->addRoute(['GET', 'POST'], '/signup', ['\UserPack\Controller\User', 'signup']);
+$this->router->addRoute(['GET', 'POST'], '/signin', ['\UserPack\Controller\User', 'signin']);
+$this->router->addRoute(['GET', 'POST'], '/signout', ['\UserPack\Controller\User', 'signout']);
 
 // TODO:
 $this->router->addGroup('/admin', function($r) {
-    $r->addRoute(['GET', 'POST'], '[/{page:[\d+]?}]', ['\Jarzon\UserPack\Controller\User', 'list']);
+    $r->addRoute(['GET', 'POST'], '[/{page:[\d+]?}]', ['\UserPack\Controller\User', 'list']);
 
-    $r->addRoute(['GET', 'POST'], '/edit/{user:[\d+]?}', ['\Jarzon\UserPack\Controller\User', 'showUser']);
+    $r->addRoute(['GET', 'POST'], '/edit/{user:[\d+]?}', ['\UserPack\Controller\User', 'showUser']);
 
-    $r->get('/delete/{user:[\d+]?}', ['\Jarzon\UserPack\Controller\User', 'deleteUser']);
+    $r->get('/delete/{user:[\d+]?}', ['\UserPack\Controller\User', 'deleteUser']);
 });

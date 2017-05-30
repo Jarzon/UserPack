@@ -1,19 +1,12 @@
 <?php
-namespace Jarzon\UserPack\Controller;
+namespace UserPack\Controller;
 
 use Prim\Controller;
 
-use Jarzon\UserPack\Model\UserModel;
+use UserPack\Model\UserModel;
 
-/**
- * Class User
- *
- */
 class Admin extends Controller
 {
-    /**
-     * PAGE: index
-     */
     public function list(int $page = 1)
     {
         $user = new UserModel($this->db);
@@ -28,9 +21,6 @@ class Admin extends Controller
         $this->design('admin/list');
     }
 
-    /**
-     * ACTION: deleteUser
-     */
     public function deleteUser(int $user_id)
     {
         $user = new UserModel($this->db);
@@ -42,9 +32,6 @@ class Admin extends Controller
         $this->redirect('/users');
     }
 
-    /**
-     * ACTION: updateUser
-     */
     public function updateUser(int $user_id)
     {
         $user = new UserModel($this->db);

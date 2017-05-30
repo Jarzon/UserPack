@@ -1,5 +1,5 @@
 <?php
-namespace Jarzon\UserPack\Model;
+namespace UserPack\Model;
 
 class UserModel extends \Prim\Model
 {

@@ -1,5 +1,5 @@
 <?php
-namespace Jarzon\UserPack\Service;
+namespace UserPack\Service;
 
 trait Controller
 {

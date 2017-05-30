@@ -10,7 +10,7 @@ if(ENV == 'prod') {
 }
 ?>
 <form method="POST">
-    <?=$this->generateForms($forms)?>
+    <?=$forms->generateForms()?>
 
     <input type="submit" name="submit_signup" value="Sign in">
 </form>

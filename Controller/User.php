@@ -1,9 +1,10 @@
 <?php
-namespace Jarzon\UserPack\Controller;
+namespace UserPack\Controller;
 
 use Prim\Controller;
 
-use Jarzon\UserPack\Model\UserModel;
+use UserPack\Model\UserModel;
+use PrimUtilities\Forms;
 
 /**
  * Class User
@@ -11,13 +12,15 @@ use Jarzon\UserPack\Model\UserModel;
  */
 class User extends Controller
 {
-    use \Jarzon\UserPack\Service\Controller;
+    use \UserPack\Service\Controller;
 
     public function signup()
     {
         $user = new UserModel($this->db);
 
-        $forms = [
+        $forms = new Forms($this->view);
+
+        $forms->forms = [
             ['label' => '', 'name' => 'email', 'value' => '', 'required' => true],
             ['label' => '', 'name' => 'name', 'value' => '', 'required' => true],
             ['label' => '', 'type' => 'password', 'name' => 'password', 'value' => '', 'required' => true],
@@ -111,6 +114,42 @@ class User extends Controller
         }
 
         $this->redirect('/');
+    }
+
+    public function settings()
+    {
+        $this->verification();
+
+        $user = new UserModel($this->db);
+
+        $settings = $user->getUserSettings($this->user_id);
+
+        $forms = new Forms($this->view);
+
+        $forms->email('email', 'mail', '', $settings->email);
+        $forms->text('email server url', 'smtp_url', '', $settings->smtp_url);
+        $forms->number('email server port', 'smtp_port', '', $settings->smtp_port, false, 0);
+        $forms->select('email server secure', 'smtp_secure', '', ['Not secure' => '', 'TLS' => 'tls', 'SSL' => 'ssl'], $settings->smtp_secure);
+        $forms->password('email password', 'smtp_password', '', $settings->smtp_password);
+
+        if (isset($_POST['submit_settings'])) {
+            try {
+                $params = $forms->verification($_POST);
+
+                $this->addVar('message', 'Les configurations on bien été enregistrer.');
+            }
+            catch (\Exception $e) {
+                $this->addVar('error', $e->getMessage());
+            }
+
+            array_push($params, $this->user_id);
+
+            $user->saveUserSettings(...$params);
+        }
+
+        $this->addVar('forms', $forms);
+
+        $this->design('settings');
     }
 
 }
