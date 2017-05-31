@@ -1,5 +1,5 @@
 {
-  "languages": ["en", "fr" ],
+  "languages": ["en", "fr"],
 
   "sign up": ["Sign up", "Inscription"],
   "sign in": ["Sign in", "Connexion"],
@@ -7,6 +7,7 @@
   "settings": ["Settings", "Configurations"],
 
   "users": ["Users", "Utilisateurs"],
+  "name": ["Name", "Nom"],
   "password": ["Password", "Mot de passe"],
   "wrong username or password": ["Wrong username or password", "Mauvais nom d'utilisateur ou mot de passe"],
   "remember me": ["Keep me signed in", "Rester connecté"]
