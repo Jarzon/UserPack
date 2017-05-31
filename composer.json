@@ -2,10 +2,10 @@
   "name": "userpack",
   "type": "project",
   "autoload": {
-    "psr-4": {"Jarzon\\UserPack\\": "/"}
+    "psr-4": {"UserPack\\": "/"}
   },
   "autoload-dev": {
-    "psr-4": {"Tests\\": "app/tests/"}
+    "psr-4": {"Tests\\": "tests/"}
   },
   "require": {
     "php": ">=7.0.0",
