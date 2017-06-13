@@ -3,7 +3,6 @@ namespace UserPack\Controller;
 
 use Prim\Controller;
 
-use UserPack\Model\UserModel;
 use PrimUtilities\Forms;
 
 /**
@@ -16,7 +15,7 @@ class User extends Controller
 
     public function signup()
     {
-        $user = new UserModel($this->db);
+        $user = new $this->getModel('UserModel');
 
         $forms = new Forms($this->view);
 
