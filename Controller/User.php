@@ -119,17 +119,13 @@ class User extends Controller
     {
         $this->verification();
 
-        $user = new UserModel($this->db);
+        $user = $this->getModel('UserModel');
 
         $settings = $user->getUserSettings($this->user_id);
 
         $forms = new Forms($this->view);
 
         $forms->email('email', 'mail', '', $settings->email);
-        $forms->text('email server url', 'smtp_url', '', $settings->smtp_url);
-        $forms->number('email server port', 'smtp_port', '', $settings->smtp_port, false, 0);
-        $forms->select('email server secure', 'smtp_secure', '', ['Not secure' => '', 'TLS' => 'tls', 'SSL' => 'ssl'], $settings->smtp_secure);
-        $forms->password('email password', 'smtp_password', '', $settings->smtp_password);
 
         if (isset($_POST['submit_settings'])) {
             try {

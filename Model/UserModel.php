@@ -87,4 +87,20 @@ class UserModel extends \Prim\Model
 
         return $query->fetch()->amount_of_users;
     }
+
+    public function getUserSettings(int $user_id)
+    {
+        $query = $this->db->prepare("SELECT email FROM users WHERE id = ? LIMIT 1");
+
+        $query->execute([$user_id]);
+
+        return $query->fetch();
+    }
+
+    public function saveUserSettings(string $email)
+    {
+        $query = $this->db->prepare("UPDATE users SET email = ? WHERE id = ?");
+
+        $query->execute([$email]);
+    }
 }

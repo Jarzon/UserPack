@@ -5,9 +5,9 @@ $this->both('/signout', 'UserPack\User', 'signout');
 
 // TODO: implement admin
 $this->addGroup('/admin', function($r) {
-    $r->both('[/{page:[\d+]?}]', 'UserPack\User', 'list');
+    $r->both('[/{page:[\d+]?}]', 'UserPack\Admin', 'list');
 
-    $r->both('/edit/{user:[\d+]?}', 'UserPack\User', 'showUser');
+    $r->both('/edit/{user:[\d+]?}', 'UserPack\Admin', 'showUser');
 
-    $r->get('/delete/{user:[\d+]?}', 'UserPack\User', 'deleteUser');
+    $r->get('/delete/{user:[\d+]?}', 'UserPack\Admin', 'deleteUser');
 });
