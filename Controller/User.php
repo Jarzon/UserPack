@@ -96,8 +96,6 @@ class User extends Controller
     {
         $this->verification();
 
-        $user = $this->getModel('UserModel');
-
         if($this->logged) {
             $_SESSION = [];
 
