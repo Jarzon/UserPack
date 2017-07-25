@@ -9,7 +9,7 @@
   },
   "require": {
     "php": ">=7.0.0",
-    "jarzon/prim": "0.5.*",
+    "jarzon/prim": "0.6.*",
     "jarzon/primutilities": "0.5.*",
     "robmorgan/phinx": "^0.6.4"
   },
