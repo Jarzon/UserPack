@@ -10,7 +10,12 @@ if(ENV == 'prod') {
 }
 ?>
 <form method="POST">
-    <?=$forms->generateForms()?>
+    <?php foreach ($forms as $form):?>
+        <label>
+            <?=$_($form['label'])?>
+            <?=$form['html']?>
+        </label>
+    <?php endforeach;?>
 
     <input type="submit" name="submit_signup" value="Sign in">
 </form>

@@ -15,15 +15,13 @@ class User extends Controller
 
     public function signup()
     {
-        $user = new $this->getModel('UserModel');
+        $user = $this->getModel('UserModel');
 
-        $forms = new Forms($this->view);
+        $forms = new Forms($_POST);
 
-        $forms->forms = [
-            ['label' => '', 'name' => 'email', 'value' => '', 'required' => true],
-            ['label' => '', 'name' => 'name', 'value' => '', 'required' => true],
-            ['label' => '', 'type' => 'password', 'name' => 'password', 'value' => '', 'required' => true],
-        ];
+        $forms->email('', 'email', '', '', false, 0, ['required' => true]);
+        $forms->text('', 'name', '', '', false, 0, ['required' => true]);
+        $forms->password('', 'password', '', '', false, 0, ['required' => true]);
 
         $this->addVar('message', false);
 
@@ -49,7 +47,7 @@ class User extends Controller
             }
         }
 
-        $this->addVar('forms', $forms);
+        $this->addVar('forms', $forms->getForms());
 
         $this->design('signup');
     }
@@ -58,12 +56,27 @@ class User extends Controller
     {
         $user = $this->getModel('UserModel');
 
+        $forms = new Forms($_POST);
+
+        $forms->text('', 'name', '', '', false, 0, ['required' => true]);
+        $forms->password('', 'password', '', '', false, 0, ['required' => true]);
+        $forms->checkbox('remember', '', ['remember me' => ''], '');
+
         $this->addVar('message', false);
 
         if (isset($_POST['submit_signin'])) {
-            $name = $_POST['name'];
-            $password = $_POST['password'];
-            $remember = false;
+            try {
+                $params = $forms->verification();
+
+                $this->addVar('message', 'Les configurations on bien été enregistrer.');
+            }
+            catch (\Exception $e) {
+                $this->addVar('error', $e->getMessage());
+            }
+
+            $name = $params[0];
+            $password = $params[1];
+            $remember = $params[2];
             if(isset($_POST['remember'])) {
                 $remember = true;
             }
@@ -88,6 +101,8 @@ class User extends Controller
 
             $this->addVar('message', true);
         }
+
+        $this->addVar('forms', $forms->getForms());
 
         $this->design('signin');
     }
@@ -121,13 +136,13 @@ class User extends Controller
 
         $settings = $user->getUserSettings($this->user_id);
 
-        $forms = new Forms($this->view);
+        $forms = new Forms($_POST);
 
         $forms->email('email', 'mail', '', $settings->email);
 
         if (isset($_POST['submit_settings'])) {
             try {
-                $params = $forms->verification($_POST);
+                $params = $forms->verification();
 
                 $this->addVar('message', 'Les configurations on bien été enregistrer.');
             }
@@ -140,7 +155,7 @@ class User extends Controller
             $user->saveUserSettings(...$params);
         }
 
-        $this->addVar('forms', $forms);
+        $this->addVar('forms', $forms->getForms());
 
         $this->design('settings');
     }
