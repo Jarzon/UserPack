@@ -1,6 +1,6 @@
 <div class="box">
-    <?php if($message): ?>
-        <div class="alert"><?=$_('wrong username or password')?></div>
+    <?php if(isset($message)): ?>
+        <div class="<?=$message[0]?>"><?=$_($message[1])?></div>
     <?php endif ?>
     <form method="POST">
         <?php foreach ($forms as $form):?>

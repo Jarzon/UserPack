@@ -5,10 +5,6 @@ use Prim\Controller;
 
 use PrimUtilities\Forms;
 
-/**
- * Class User
- *
- */
 class User extends Controller
 {
     use \UserPack\Service\Controller;
@@ -23,33 +19,36 @@ class User extends Controller
         $forms->text('', 'name', '', '', false, 0, ['required' => true]);
         $forms->password('', 'password', '', '', false, 0, ['required' => true]);
 
-        $this->addVar('message', false);
-
         if (isset($_POST['submit_signup'])) {
-            $email = $_POST['email'];
-            $name = $_POST['name'];
-            $password = $_POST['password'];
+            try {
+                $params = $forms->verification();
+            }
+            catch (\Exception $e) {
+                $this->addVar('message', ['error', $e->getMessage()]);
+            }
 
-            $password = hash('sha512', $email.$password.$name);
+            if(isset($params)) {
+                list($email, $name, $password) = $params;
 
-            if(!$user->exists([$email, $name])) {
-                $id = $user->signup([$email, $name, $password]);
+                $password = hash('sha512', $email.$password.$name);
 
-                $_SESSION['user_id'] = $id;
-                $_SESSION['email'] = $_POST['email'];
-                $_SESSION['name'] = $_POST['name'];
-                $_SESSION['level'] = 0;
+                if(!$user->exists([$email, $name])) {
+                    $id = $user->signup($params);
 
-                $this->redirect('/');
+                    $_SESSION['user_id'] = $id;
+                    $_SESSION['email'] = $email;
+                    $_SESSION['name'] = $name;
+                    $_SESSION['level'] = 0;
 
-            } else {
-                $this->addVar('message', true);
+                    $this->redirect('/');
+
+                } else {
+                    $this->addVar('message', ['ok', 'your account have been created']);
+                }
             }
         }
 
-        $this->addVar('forms', $forms->getForms());
-
-        $this->design('signup');
+        $this->design('signup', 'UserPack', ['forms' => $forms->getForms()]);
     }
 
     public function signin()
@@ -67,16 +66,13 @@ class User extends Controller
         if (isset($_POST['submit_signin'])) {
             try {
                 $params = $forms->verification();
-
-                $this->addVar('message', 'Les configurations on bien été enregistrer.');
             }
             catch (\Exception $e) {
-                $this->addVar('error', $e->getMessage());
+                $this->addVar('message', ['error', $e->getMessage()]);
             }
 
-            $name = $params[0];
-            $password = $params[1];
-            $remember = $params[2];
+            list($name, $password, $remember) = $params;
+
             if(isset($_POST['remember'])) {
                 $remember = true;
             }
@@ -98,13 +94,9 @@ class User extends Controller
                     $this->redirect('/');
                 }
             }
-
-            $this->addVar('message', true);
         }
 
-        $this->addVar('forms', $forms->getForms());
-
-        $this->design('signin');
+        $this->design('signin', 'UserPack', ['forms' => $forms->getForms()]);
     }
 
     public function signout()
@@ -114,11 +106,11 @@ class User extends Controller
         if($this->logged) {
             $_SESSION = [];
 
-            if (ini_get("session.use_cookies")) {
+            if (ini_get('session.use_cookies')) {
                 $params = session_get_cookie_params();
                 setcookie(session_name(), '', time() - 42000,
-                    $params["path"], $params["domain"],
-                    $params["secure"], $params["httponly"]
+                    $params['path'], $params['domain'],
+                    $params['secure'], $params['httponly']
                 );
             }
 
@@ -144,10 +136,10 @@ class User extends Controller
             try {
                 $params = $forms->verification();
 
-                $this->addVar('message', 'Les configurations on bien été enregistrer.');
+                $this->addVar('message', ['ok', 'the settings have been saved']);
             }
             catch (\Exception $e) {
-                $this->addVar('error', $e->getMessage());
+                $this->addVar('message', ['error', $e->getMessage()]);
             }
 
             array_push($params, $this->user_id);
@@ -155,9 +147,7 @@ class User extends Controller
             $user->saveUserSettings(...$params);
         }
 
-        $this->addVar('forms', $forms->getForms());
-
-        $this->design('settings');
+        $this->design('settings', 'UserPack', ['forms' => $forms->getForms()]);
     }
 
 }
