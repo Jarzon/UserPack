@@ -61,8 +61,6 @@ class User extends Controller
         $forms->password('', 'password', '', '', false, 0, ['required' => true]);
         $forms->checkbox('remember', '', ['remember me' => ''], '');
 
-        $this->addVar('message', false);
-
         if (isset($_POST['submit_signin'])) {
             try {
                 $params = $forms->verification();
