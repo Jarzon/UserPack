@@ -33,7 +33,7 @@ class User extends Controller
                 $password = hash('sha512', $email.$password.$name);
 
                 if(!$user->exists([$email, $name])) {
-                    $id = $user->signup($params);
+                    $id = $user->signup([$email, $name, $password]);
 
                     $_SESSION['user_id'] = $id;
                     $_SESSION['email'] = $email;
