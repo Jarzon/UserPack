@@ -59,7 +59,7 @@ class User extends Controller
 
         $forms->text('', 'name', '', '', false, 0, ['required' => true]);
         $forms->password('', 'password', '', '', false, 0, ['required' => true]);
-        $forms->checkbox('remember', '', ['remember me' => ''], '');
+        $forms->checkbox('remember', '', true, '');
 
         if (isset($_POST['submit_signin'])) {
             try {
@@ -69,27 +69,25 @@ class User extends Controller
                 $this->addVar('message', ['error', $e->getMessage()]);
             }
 
-            list($name, $password, $remember) = $params;
+            if(isset($params)) {
+                list($name, $password, $remember) = $params;
 
-            if(isset($_POST['remember'])) {
-                $remember = true;
-            }
+                if($infos = $user->signin([$name])) {
+                    $password = hash('sha512', $infos->email.$password.$infos->name);
 
-            if($infos = $user->signin([$name])) {
-                $password = hash('sha512', $infos->email.$password.$infos->name);
+                    if($password === $infos->password) {
+                        $_SESSION['user_id'] = $infos->id;
+                        $_SESSION['email'] = $infos->email;
+                        $_SESSION['name'] = $infos->name;
+                        $_SESSION['level'] = $infos->status;
 
-                if($password === $infos->password) {
-                    $_SESSION['user_id'] = $infos->id;
-                    $_SESSION['email'] = $infos->email;
-                    $_SESSION['name'] = $infos->name;
-                    $_SESSION['level'] = $infos->status;
+                        if($remember) {
+                            $params = session_get_cookie_params();
+                            setcookie(session_name(), $_COOKIE[session_name()], time() + 60*60*24*30*3, $params['path'], $params['domain'], $params['secure'], $params['httponly']);
+                        }
 
-                    if($remember) {
-                        $params = session_get_cookie_params();
-                        setcookie(session_name(), $_COOKIE[session_name()], time() + 60*60*24*30*3, $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
+                        $this->redirect('/');
                     }
-
-                    $this->redirect('/');
                 }
             }
         }

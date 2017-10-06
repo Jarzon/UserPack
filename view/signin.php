@@ -4,9 +4,9 @@
     <?php endif ?>
     <form method="POST">
         <?php foreach ($forms as $form):?>
-            <?php if($form['type'] == 'checkbox' || $form['type'] == 'radio'): ?>
-                <?php foreach ($form['html'] as $checkbox):?>
-                    <label><?=$checkbox['input']?> <?=$_($checkbox['label'])?></label>
+            <?php if($form['type'] == 'radio'): ?>
+                <?php foreach ($form['html'] as $radio):?>
+                    <label><?=$radio['input']?> <?=$_($radio['label'])?></label>
                 <?php endforeach;?>
             <?php else: ?>
                 <label><?=$_($form['label'])?> <?=$form['html']?></label>
