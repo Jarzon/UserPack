@@ -90,6 +90,8 @@ class User extends Controller
                     } else {
                         $this->addVar('message', ['error', 'wrong password or username']);
                     }
+                } else {
+                    $this->addVar('message', ['error', 'wrong password or username']);
                 }
             }
         }
