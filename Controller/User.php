@@ -32,7 +32,7 @@ class User extends Controller
 
                 $password = hash('sha512', $email.$password.$name);
 
-                if(!$user->exists([$email, $name])) {
+                if(!$user->exists($email, $name)) {
                     $id = $user->signup([$email, $name, $password]);
 
                     $_SESSION['user_id'] = $id;
@@ -43,7 +43,7 @@ class User extends Controller
                     $this->redirect('/');
 
                 } else {
-                    $this->addVar('message', ['ok', 'your account have been created']);
+                    $this->addVar('message', ['error', 'that email is already used by another account']);
                 }
             }
         }
@@ -103,8 +103,8 @@ class User extends Controller
             $_SESSION = [];
 
             if (ini_get('session.use_cookies')) {
-                $params = session_get_cookie_params();
-                setcookie(session_name(), '', time() - 42000,
+                    $params = session_get_cookie_params();
+                    setcookie(session_name(), '', time() - 42000,
                     $params['path'], $params['domain'],
                     $params['secure'], $params['httponly']
                 );

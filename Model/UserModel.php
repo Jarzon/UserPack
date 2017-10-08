@@ -3,15 +3,15 @@ namespace UserPack\Model;
 
 class UserModel extends \Prim\Model
 {
-    public function exists(array $params) : bool
+    public function exists(string $email, string $name) : bool
     {
         $query = $this->db->prepare("
             SELECT id
             FROM users
-            WHERE name = ? OR password = ?
-            LIMIT 0, 1");
+            WHERE email = ? OR name = ?
+            LIMIT 1");
 
-        $query->execute($params);
+        $query->execute([$email, $name]);
 
         return ($query->fetch())? true: false;
     }
@@ -19,8 +19,11 @@ class UserModel extends \Prim\Model
     public function signUp($params)
     {
         $query = $this->db->prepare("INSERT INTO users(email, name, password) VALUES (?, ?, ?)");
+        $query->execute($params);
 
-        return $query->execute($params);
+        $userId = $this->signIn([$params[1]]);
+
+        return $userId->id;
     }
 
     public function signIn($params)
