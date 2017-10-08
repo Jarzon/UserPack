@@ -87,6 +87,8 @@ class User extends Controller
                         }
 
                         $this->redirect('/');
+                    } else {
+                        $this->addVar('message', ['error', 'wrong password or username']);
                     }
                 }
             }
