@@ -28,16 +28,14 @@ class User extends Controller
             }
 
             if(isset($params)) {
-                list($email, $name, $password) = $params;
+                $password = hash('sha512', $params['email'].$params['password'].$params['name']);
 
-                $password = hash('sha512', $email.$password.$name);
-
-                if(!$user->exists($email, $name)) {
-                    $id = $user->signup([$email, $name, $password]);
+                if(!$user->exists($params['email'], $params['name'])) {
+                    $id = $user->signup([$params['email'], $params['name'], $password]);
 
                     $_SESSION['user_id'] = $id;
-                    $_SESSION['email'] = $email;
-                    $_SESSION['name'] = $name;
+                    $_SESSION['email'] = $params['email'];
+                    $_SESSION['name'] = $params['name'];
                     $_SESSION['level'] = 0;
 
                     $this->redirect('/');
@@ -70,10 +68,8 @@ class User extends Controller
             }
 
             if(isset($params)) {
-                list($name, $password, $remember) = $params;
-
-                if($infos = $user->signin([$name])) {
-                    $password = hash('sha512', $infos->email.$password.$infos->name);
+                if($infos = $user->signin([$params['name']])) {
+                    $password = hash('sha512', $infos->email.$params['password'].$infos->name);
 
                     if($password === $infos->password) {
                         $_SESSION['user_id'] = $infos->id;
@@ -81,7 +77,7 @@ class User extends Controller
                         $_SESSION['name'] = $infos->name;
                         $_SESSION['level'] = $infos->status;
 
-                        if($remember) {
+                        if($params['remember']) {
                             $params = session_get_cookie_params();
                             setcookie(session_name(), $_COOKIE[session_name()], time() + 60*60*24*30*3, $params['path'], $params['domain'], $params['secure'], $params['httponly']);
                         }
@@ -144,7 +140,7 @@ class User extends Controller
 
             array_push($params, $this->user_id);
 
-            $user->saveUserSettings(...$params);
+            $user->saveUserSettings(...array_values($params));
         }
 
         $this->design('settings', 'UserPack', ['forms' => $forms->getForms()]);
