@@ -16,12 +16,11 @@ class UserModel extends \Prim\Model
         return ($query->fetch())? true: false;
     }
 
-    public function signUp($params)
+    public function signUp(array $params)
     {
-        $query = $this->db->prepare("INSERT INTO users(email, name, password) VALUES (?, ?, ?)");
-        $query->execute($params);
+        $this->insert('users', $params);
 
-        $userId = $this->signIn([$params[1]]);
+        $userId = $this->signIn([$params['name']]);
 
         return $userId->id;
     }
@@ -49,14 +48,6 @@ class UserModel extends \Prim\Model
         return $query->fetchAll();
     }
 
-    public function addUser(string $name)
-    {
-        $query = $this->db->prepare("INSERT INTO users (name) VALUES (:name)");
-        $parameters = array(':name' => $name);
-
-        $query->execute($parameters);
-    }
-
     public function deleteUser(int $user_id)
     {
         $query = $this->db->prepare("DELETE FROM users WHERE id = :user_id");
@@ -77,10 +68,7 @@ class UserModel extends \Prim\Model
 
     public function updateUser(string $name, int $user_id)
     {
-        $query = $this->db->prepare("UPDATE users SET name = :name WHERE id = :user_id");
-        $parameters = array(':name' => $name, ':user_id' => $user_id);
-
-        $query->execute($parameters);
+        $this->update('users', ['name' => $name], 'id = ?', [$user_id]);
     }
 
     public function getAmountOfUsers()
@@ -100,10 +88,8 @@ class UserModel extends \Prim\Model
         return $query->fetch();
     }
 
-    public function saveUserSettings(string $email)
+    public function saveUserSettings(array $values, int $user_id)
     {
-        $query = $this->db->prepare("UPDATE users SET email = ? WHERE id = ?");
-
-        $query->execute([$email]);
+        $this->update('users', $values, 'id = ?', [$user_id]);
     }
 }
