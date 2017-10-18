@@ -57,7 +57,7 @@ class User extends Controller
 
         $forms->text('', 'name', '', '', false, 0, ['required' => null]);
         $forms->password('', 'password', '', '', false, 0, ['required' => null]);
-        $forms->checkbox('remember', '', true, '');
+        $forms->checkbox('remember me', 'remember', true, '');
 
         if (isset($_POST['submit_signin'])) {
             try {
