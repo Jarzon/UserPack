@@ -15,9 +15,9 @@ class User extends Controller
 
         $forms = new Forms($_POST);
 
-        $forms->email('', 'email', '', '', false, 0, ['required' => null]);
-        $forms->text('', 'name', '', '', false, 0, ['required' => null]);
-        $forms->password('', 'password', '', '', false, 0, ['required' => null]);
+        $forms->email('email')->required();
+        $forms->text('name')->required();
+        $forms->password('password')->required();
 
         if (isset($_POST['submit_signup'])) {
             try {
@@ -41,7 +41,7 @@ class User extends Controller
                     $this->redirect('/');
 
                 } else {
-                    $this->addVar('message', ['error', 'that email is already used by another account']);
+                    $this->addVar('message', ['error', 'that email/name is already used by another account']);
                 }
             }
         }
@@ -55,9 +55,12 @@ class User extends Controller
 
         $forms = new Forms($_POST);
 
-        $forms->text('', 'name', '', '', false, 0, ['required' => null]);
-        $forms->password('', 'password', '', '', false, 0, ['required' => null]);
-        $forms->checkbox('remember me', 'remember', '', true);
+        $forms->text('name')->required();
+        $forms->password('password')->required();
+        $forms->checkbox('remember')
+            ->label('remember me')
+            ->value(true)
+            ->required();
 
         if (isset($_POST['submit_signin'])) {
             try {
@@ -126,7 +129,11 @@ class User extends Controller
 
         $forms = new Forms($_POST);
 
-        $forms->email('email', 'mail', '', $settings->email, false, '', ['required' => null]);
+        $forms
+            ->email('mail')
+            ->label('email')
+            ->value($settings->email)
+            ->required();
 
         if (isset($_POST['submit_settings'])) {
             try {
