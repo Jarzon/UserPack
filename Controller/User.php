@@ -59,8 +59,7 @@ class User extends Controller
         $forms->password('password')->required();
         $forms->checkbox('remember')
             ->label('remember me')
-            ->value(true)
-            ->required();
+            ->value(true);
 
         if (isset($_POST['submit_signin'])) {
             try {
