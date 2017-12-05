@@ -9,9 +9,13 @@ class User extends Controller
 {
     use \UserPack\Service\Controller;
 
+    private function getUserModel() : \UserPack\Model\UserModel {
+        return $this->getModel('UserModel');
+    }
+
     public function signup()
     {
-        $user = $this->getModel('UserModel');
+        $user = $this->getUserModel();
 
         $forms = new Forms($_POST);
 
@@ -51,7 +55,7 @@ class User extends Controller
 
     public function signin()
     {
-        $user = $this->getModel('UserModel');
+        $user = $this->getUserModel();
 
         $forms = new Forms($_POST);
 
@@ -122,7 +126,7 @@ class User extends Controller
     {
         $this->verification();
 
-        $user = $this->getModel('UserModel');
+        $user = $this->getUserModel();
 
         $settings = $user->getUserSettings($this->user_id);
 
