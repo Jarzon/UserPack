@@ -3,7 +3,7 @@ namespace UserPack\Controller;
 
 class Signout extends User
 {
-    public function signout()
+    public function index()
     {
         $this->verification();
 
@@ -21,6 +21,10 @@ class Signout extends User
             session_destroy();
         }
 
+        $this->redirection();
+    }
+
+    protected function redirection() {
         $this->redirect('/');
     }
 }
