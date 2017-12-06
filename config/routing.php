@@ -1,7 +1,7 @@
 <?php
-$this->both('/signup', 'UserPack\User', 'signup');
-$this->both('/signin', 'UserPack\User', 'signin');
-$this->both('/signout', 'UserPack\User', 'signout');
+$this->both('/signup', 'UserPack\Signup', 'signup');
+$this->both('/signin', 'UserPack\Signin', 'signin');
+$this->both('/signout', 'UserPack\Signout', 'signout');
 
 // TODO: implement admin
 $this->addGroup('/admin', function($r) {
