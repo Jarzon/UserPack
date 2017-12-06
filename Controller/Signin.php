@@ -17,7 +17,8 @@ class Signin extends User
                 $this->addVar('message', ['error', $e->getMessage()]);
             }
 
-            $this->submit($values);
+            if($this->submit($values))
+                $this->redirection();
         }
 
         $this->design('signin', 'UserPack', ['forms' => $forms->getForms()]);
@@ -37,23 +38,23 @@ class Signin extends User
 
     protected function submit(array $values)
     {
-        if (!empty($values)) {
-            $user = $this->getUserModel();
+        if (!empty($values)) return false;
 
-            if (!$infos = $user->signin([$values['name']])) {
-                $this->addVar('message', ['error', 'wrong password or username']);
-                return;
-            }
+        $user = $this->getUserModel();
 
-            $password = hash('sha512', $infos->email . $values['password'] . $infos->name);
-
-            if ($password !== $infos->password) {
-                $this->addVar('message', ['error', 'wrong password or username']);
-                return;
-            }
-
-            $this->signin($values, $infos);
+        if (!$infos = $user->signin([$values['name']])) {
+            $this->addVar('message', ['error', 'wrong password or username']);
+            return false;
         }
+
+        $password = hash('sha512', $infos->email . $values['password'] . $infos->name);
+
+        if ($password !== $infos->password) {
+            $this->addVar('message', ['error', 'wrong password or username']);
+            return false;
+        }
+
+        return $this->signin($values, $infos);
     }
 
     protected function signin($values, $infos) {
@@ -67,6 +68,10 @@ class Signin extends User
             setcookie(session_name(), $_COOKIE[session_name()], time() + 60 * 60 * 24 * 30 * 3, $params['path'], $params['domain'], $params['secure'], $params['httponly']);
         }
 
+        return true;
+    }
+
+    protected function redirection() {
         $this->redirect('/');
     }
 }

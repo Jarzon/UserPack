@@ -17,7 +17,8 @@ class Signup extends User
                 $this->addVar('message', ['error', $e->getMessage()]);
             }
 
-            $this->submit($values);
+            if($this->submit($values))
+                $this->redirection();
         }
 
         $this->design('signup', 'UserPack', ['forms' => $forms->getForms()]);
@@ -33,22 +34,21 @@ class Signup extends User
         return $forms;
     }
 
-
     protected function submit(array $values = []) {
-        if(!empty($values)) {
-            $user = $this->getUserModel();
+        if(empty($values)) return false;
 
-            $values['password'] = hash('sha512', $values['email'].$values['password'].$values['name']);
+        $user = $this->getUserModel();
 
-            if($user->exists($values['email'], $values['name'])) {
-                $this->addVar('message', ['error', 'that email/name is already used by another account']);
-                return;
-            }
+        $values['password'] = hash('sha512', $values['email'].$values['password'].$values['name']);
 
-            $id = $user->signup($values);
-
-            $this->signin($values, $id);
+        if($user->exists($values['email'], $values['name'])) {
+            $this->addVar('message', ['error', 'that email/name is already used by another account']);
+            return false;
         }
+
+        $id = $user->signup($values);
+
+        return $this->signin($values, $id);
     }
 
     protected function signin($values, $id) {
@@ -57,6 +57,10 @@ class Signup extends User
         $_SESSION['name'] = $values['name'];
         $_SESSION['level'] = 0;
 
+        return true;
+    }
+
+    protected function redirection() {
         $this->redirect('/');
     }
 }
