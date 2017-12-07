@@ -25,7 +25,7 @@ class Settings extends User
                 $this->addVar('message', ['error', $e->getMessage()]);
             }
 
-            $this->submit($values, $user);
+            if(!empty($values)) $this->submit($values, $user);
         }
 
         $this->design('settings', 'UserPack', ['forms' => $forms->getForms()]);
@@ -45,8 +45,6 @@ class Settings extends User
 
     protected function submit(array $values, $user)
     {
-        if(!empty($values)) {
-            $user->saveUserSettings($values, $this->user_id);
-        }
+        $user->saveUserSettings($values, $this->user_id);
     }
 }
