@@ -38,7 +38,7 @@ class Signin extends User
 
     protected function submit(array $values)
     {
-        if (!empty($values)) return false;
+        if (empty($values)) return false;
 
         $user = $this->getUserModel();
 
