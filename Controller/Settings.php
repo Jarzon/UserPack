@@ -5,13 +5,25 @@ use PrimUtilities\Forms;
 
 class Settings extends User
 {
+    protected function getForms($settings) {
+        $forms = new Forms($_POST);
+
+        $forms
+            ->email('mail')
+            ->label('email')
+            ->value($settings->email)
+            ->required();
+
+        return $forms;
+    }
+
     public function index()
     {
-        $this->verification();
+        $this->user->verification();
 
         $user = $this->getUserModel();
 
-        $settings = $user->getUserSettings($this->user_id);
+        $settings = $user->getUserSettings($this->user->id);
 
         $forms = $this->getForms($settings);
 
@@ -31,20 +43,8 @@ class Settings extends User
         $this->design('settings', 'UserPack', ['forms' => $forms->getForms()]);
     }
 
-    protected function getForms($settings) {
-        $forms = new Forms($_POST);
-
-        $forms
-            ->email('mail')
-            ->label('email')
-            ->value($settings->email)
-            ->required();
-
-        return $forms;
-    }
-
     protected function submit(array $values, $user)
     {
-        $user->saveUserSettings($values, $this->user_id);
+        $user->saveUserSettings($values, $this->user->id);
     }
 }

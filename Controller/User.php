@@ -5,9 +5,10 @@ use Prim\Controller;
 
 class User extends Controller
 {
-    use \UserPack\Service\Controller;
-
-    public function getUserModel() : \UserPack\Model\UserModel {
+    /**
+     * @return \UserPack\Model\UserModel
+     */
+    public function getUserModel() {
         return $this->getModel('UserModel');
     }
 }

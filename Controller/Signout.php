@@ -5,7 +5,7 @@ class Signout extends User
 {
     public function index()
     {
-        $this->verification();
+        $this->user->verification();
 
         if($this->logged) {
             $_SESSION = [];
