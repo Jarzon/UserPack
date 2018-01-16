@@ -7,7 +7,7 @@ class Signout extends User
     {
         $this->user->verification();
 
-        if($this->logged) {
+        if($this->user->logged) {
             $_SESSION = [];
 
             if (ini_get('session.use_cookies')) {
