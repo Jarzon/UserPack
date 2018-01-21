@@ -1,5 +1,5 @@
 {
-  "name": "userpack",
+  "name": "jarzon/userpack",
   "type": "project",
   "autoload": {
     "psr-4": {"UserPack\\": "/"}
