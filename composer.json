@@ -9,8 +9,8 @@
   },
   "require": {
     "php": ">=7.0.0",
-    "jarzon/prim": "~0.11.0",
-    "jarzon/primutilities": "~0.11.0",
+    "jarzon/prim": "~0.12.0",
+    "jarzon/forms": "~0.1.0",
     "robmorgan/phinx": "^0.6.4"
   },
   "config": {
