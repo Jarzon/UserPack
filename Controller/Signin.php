@@ -1,7 +1,7 @@
 <?php
 namespace UserPack\Controller;
 
-use PrimUtilities\Forms;
+use Jarzon\Forms;
 
 class Signin extends User
 {
