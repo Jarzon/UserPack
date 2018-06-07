@@ -1,37 +1,41 @@
 <?php
 namespace UserPack\Controller;
 
-use Jarzon\Forms;
+use Jarzon\Form;
 
 class Signup extends User
 {
     public function index()
     {
-        $forms = $this->getForms();
+        $form = $this->getForm();
 
-        if (isset($_POST['submit_signup'])) {
+        if ($form->submitted()) {
             try {
-                $values = $forms->verification();
+                $values = $form->validation();
+
+                if($this->submit($values)) {
+                    $this->redirection();
+                }
             }
             catch (\Exception $e) {
                 $this->addVar('message', ['error', $e->getMessage()]);
             }
-
-            if($this->submit($values))
-                $this->redirection();
         }
 
-        $this->design('signup', 'UserPack', ['forms' => $forms->getForms()]);
+        $this->design('signup', 'UserPack', ['form' => $form]);
     }
 
-    protected function getForms() {
-        $forms = new Forms($_POST);
+    protected function getForm() {
+        $form = new Form($_POST);
 
-        $forms->email('email')->required();
-        $forms->text('name')->required();
-        $forms->password('password')->required();
+        $form
+            ->email('email')->required()
+            ->text('name')->required()
+            ->password('password')->required()
 
-        return $forms;
+            ->submit();
+
+        return $form;
     }
 
     protected function submit(array $values = []) {

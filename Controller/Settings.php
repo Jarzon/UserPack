@@ -1,20 +1,21 @@
 <?php
 namespace UserPack\Controller;
 
-use Jarzon\Forms;
+use Jarzon\Form;
 
 class Settings extends User
 {
-    protected function getForms($settings) {
-        $forms = new Forms($_POST);
+    protected function getForm($settings) {
+        $form = new Form($_POST);
 
-        $forms
+        $form
             ->email('mail')
-            ->label('email')
             ->value($settings->email)
-            ->required();
+            ->required()
 
-        return $forms;
+            ->submit();
+
+        return $form;
     }
 
     public function index()
@@ -25,22 +26,22 @@ class Settings extends User
 
         $settings = $user->getUserSettings($this->user->id);
 
-        $forms = $this->getForms($settings);
+        $form = $this->getForm($settings);
 
-        if (isset($_POST['submit_settings'])) {
+        if ($form->submitted()) {
             try {
-                $values = $forms->verification();
+                $values = $form->validation();
+
+                $this->submit($values, $user);
 
                 $this->addVar('message', ['ok', 'the settings have been saved']);
             }
             catch (\Exception $e) {
                 $this->addVar('message', ['error', $e->getMessage()]);
             }
-
-            if(!empty($values)) $this->submit($values, $user);
         }
 
-        $this->design('settings', 'UserPack', ['forms' => $forms->getForms()]);
+        $this->design('settings', 'UserPack', ['forms' => $form]);
     }
 
     protected function submit(array $values, $user)

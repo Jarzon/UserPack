@@ -1,39 +1,41 @@
 <?php
 namespace UserPack\Controller;
 
-use Jarzon\Forms;
+use Jarzon\Form;
 
 class Signin extends User
 {
     public function index()
     {
-        $forms = $this->getForms();
+        $form = $this->getForm();
 
-        if (isset($_POST['submit_signin'])) {
+        if ($form->submitted()) {
             try {
-                $values = $forms->verification();
+                $values = $form->validation();
+
+                if($this->submit($values)) {
+                    $this->redirection();
+                }
             }
             catch (\Exception $e) {
                 $this->addVar('message', ['error', $e->getMessage()]);
             }
-
-            if($this->submit($values))
-                $this->redirection();
         }
 
-        $this->design('signin', 'UserPack', ['forms' => $forms->getForms()]);
+        $this->design('signin', 'UserPack', ['forms' => $form]);
     }
 
-    protected function getForms() {
-        $forms = new Forms($_POST);
+    protected function getForm() {
+        $form = new Form($_POST);
 
-        $forms->text('name')->required();
-        $forms->password('password')->required();
-        $forms->checkbox('remember')
-            ->label('remember me')
-            ->value(true);
+        $form
+            ->text('name')->required()
+            ->password('password')->required()
+            ->checkbox('remember')->value(true)
 
-        return $forms;
+            ->submit();
+
+        return $form;
     }
 
     protected function submit(array $values)
@@ -61,7 +63,7 @@ class Signin extends User
         $_SESSION['user_id'] = $infos->id;
         $_SESSION['email'] = $infos->email;
         $_SESSION['name'] = $infos->name;
-        $_SESSION['level'] = $infos->status;
+        $_SESSION['status'] = $infos->status;
 
         if ($values['remember']) {
             $params = session_get_cookie_params();

@@ -2,13 +2,11 @@
 <?php if(isset($message)): ?>
     <div class="<?=$message[0]?>"><?=$_($message[1])?></div>
 <?php endif ?>
-<form method="POST">
-    <?php foreach ($forms as $form):?>
-        <label>
-            <?=$_($form['label'])?>
-            <?=$form['html']?>
-        </label>
-    <?php endforeach;?>
 
-    <input type="submit" name="submit_signup" value="<?=$_('sign up')?>">
-</form>
+<?=$form('form')->html?>
+    <?=$form('email')->label($_('email'))->row?>
+    <?=$form('name')->label($_('name'))->row?>
+    <?=$form('password')->label($_('password'))->row?>
+
+    <?=$form('submit')->value($_('sign up'))->html?>
+<?=$form('/form')->html?>
