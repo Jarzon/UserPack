@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "jarzon/form",
-            "version": "v1.3.1",
+            "version": "v1.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Jarzon/Form.git",
-                "reference": "bbd8f9488017bba173aaccde0a027beeea9403c9"
+                "reference": "517a1d80a30f8ae43ae1cff97e93689bd803a12e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Jarzon/Form/zipball/bbd8f9488017bba173aaccde0a027beeea9403c9",
-                "reference": "bbd8f9488017bba173aaccde0a027beeea9403c9",
+                "url": "https://api.github.com/repos/Jarzon/Form/zipball/517a1d80a30f8ae43ae1cff97e93689bd803a12e",
+                "reference": "517a1d80a30f8ae43ae1cff97e93689bd803a12e",
                 "shasum": ""
             },
             "require": {
@@ -34,7 +34,7 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2018-06-02T04:51:34+00:00"
+            "time": "2018-06-08T00:33:06+00:00"
         },
         {
             "name": "jarzon/prim",

@@ -10,5 +10,7 @@
   "name": ["Name", "Nom"],
   "password": ["Password", "Mot de passe"],
   "wrong username or password": ["Wrong username or password", "Mauvais nom d'utilisateur ou mot de passe"],
-  "remember me": ["Keep me signed in", "Rester connecté"]
+  "remember me": ["Keep me signed in", "Rester connecté"],
+
+  "no acount?": ["You don't have an account?", "Vous n'avez pas de compte ?"]
 }

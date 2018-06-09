@@ -22,10 +22,11 @@ class Signin extends User
             }
         }
 
-        $this->design('signin', 'UserPack', ['forms' => $form]);
+        $this->design('signin', 'UserPack', ['form' => $form]);
     }
 
-    protected function getForm() {
+    protected function getForm()
+    {
         $form = new Form($_POST);
 
         $form
