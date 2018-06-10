@@ -15,7 +15,7 @@
   "request reset password": ["Reset password request", "Demande réinitialisation de mot de passe"],
 
   "forgot password": ["Forgot password?", "Mot de passe oublié"],
-  "no acount?": ["You don't have an account?", "Vous n'avez pas de compte ?"],
+  "no account?": ["You don't have an account?", "Vous n'avez pas de compte ?"],
 
   "We have sent an email to reset your password at your email address.": ["We have sent an email to reset your password at your email address.", "Nous avons envoyé un email pour réinitialisé votre mot de passe à votre address email."],
   "We don't have that email/username": ["We don't have that email in our database.", "Nous n'avons pas cette email dans notre base de données."]
