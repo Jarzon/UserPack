@@ -1,9 +1,7 @@
-<?php if(isset($message)): ?>
-    <div class="<?=$message[0]?>"><?=$_($message[1])?></div>
-<?php endif ?>
+<h1><?=$_('request reset password')?></h1>
 
 <?=$form('form')->html?>
-    <?=$form('name')->label($_('name'))->row?>
+    <?=$form('email')->label($_('email'))->row?>
 
-    <?=$form('submit')->value($_('sign in'))->html?>
+    <?=$form('submit')->value($_('send'))->html?>
 <?=$form('/form')->html?>

@@ -1,4 +1,3 @@
-
 <h1 class="alignCenter"><?=$user->name?></h1>
 
 <div>

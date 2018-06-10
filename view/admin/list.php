@@ -1,6 +1,5 @@
 <h1 class="alignCenter"><?=$_('users')?></h1>
 
-
 <div class="box">
     <h3 class="alignCenter">List of users</h3>
     <table class="table">

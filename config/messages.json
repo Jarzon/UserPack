@@ -12,5 +12,8 @@
   "wrong username or password": ["Wrong username or password", "Mauvais nom d'utilisateur ou mot de passe"],
   "remember me": ["Keep me signed in", "Rester connecté"],
 
+  "request reset password": ["Reset password request", "Demande réinitialisation de mot de passe"],
+
+  "forgot password": ["Forgot password?", "Mot de passe oublié"],
   "no acount?": ["You don't have an account?", "Vous n'avez pas de compte ?"]
 }

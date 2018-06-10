@@ -5,7 +5,7 @@ use Jarzon\Form;
 
 class Settings extends User
 {
-    protected function getForm() {
+    public function getForm($settings) {
         $form = new Form($_POST);
 
         $form
@@ -13,6 +13,8 @@ class Settings extends User
             ->required()
 
             ->submit();
+
+        $form->updateValues($settings);
 
         return $form;
     }
@@ -25,9 +27,7 @@ class Settings extends User
 
         $settings = $user->getUserSettings($this->user->id);
 
-        $form = $this->getForm();
-
-        $form->updateValues($settings);
+        $form = $this->getForm($settings);
 
         if ($form->submitted()) {
             try {
