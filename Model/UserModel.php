@@ -63,7 +63,11 @@ class UserModel extends \Prim\Model
 
         $query->execute([$email]);
 
-        return $this->getUser($query->fetch()->id);
+        if(!$user = $query->fetch()) {
+            return false;
+        }
+
+        return $this->getUser($user->id);
     }
 
     public function signUp(array $params)
