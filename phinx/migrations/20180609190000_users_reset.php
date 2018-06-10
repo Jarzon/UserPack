@@ -9,6 +9,6 @@ class UsersReset extends AbstractMigration
         $table = $this->table('users');
         $table
             ->addColumn('reset', 'string', ['limit' => 40, 'after' => 'status'])
-            ->create();
+            ->update();
     }
 }
