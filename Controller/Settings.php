@@ -5,12 +5,11 @@ use Jarzon\Form;
 
 class Settings extends User
 {
-    protected function getForm($settings) {
+    protected function getForm() {
         $form = new Form($_POST);
 
         $form
             ->email('mail')
-            ->value($settings->email)
             ->required()
 
             ->submit();
@@ -26,7 +25,9 @@ class Settings extends User
 
         $settings = $user->getUserSettings($this->user->id);
 
-        $form = $this->getForm($settings);
+        $form = $this->getForm();
+
+        $form->updateValues($settings);
 
         if ($form->submitted()) {
             try {

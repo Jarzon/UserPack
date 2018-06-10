@@ -43,7 +43,7 @@ class Signup extends User
 
         $user = $this->getUserModel();
 
-        $values['password'] = hash('sha512', $values['email'].$values['password'].$values['name']);
+        $values['password'] = $this->user->hashPassword($values['email'], $values['password'], $values['name']);
 
         if($user->exists($values['email'], $values['name'])) {
             $this->addVar('message', ['error', 'that email/name is already used by another account']);

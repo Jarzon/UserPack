@@ -50,7 +50,7 @@ class Signin extends User
             return false;
         }
 
-        $password = hash('sha512', $infos->email . $values['password'] . $infos->name);
+        $password = $this->user->hashPassword($infos->email, $values['password'], $infos->name);
 
         if ($password !== $infos->password) {
             $this->addVar('message', ['error', 'wrong password or username']);

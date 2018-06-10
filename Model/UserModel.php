@@ -16,6 +16,56 @@ class UserModel extends \Prim\Model
         return ($query->fetch())? true: false;
     }
 
+    public function canResetPassword(string $email, string $token)
+    {
+        if($user = $this->getUserResetByEmail($email)) {
+            if($user->reset === $token) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function getUserResetByEmail(string $email)
+    {
+        $query = $this->db->prepare("
+            SELECT id, reset
+            FROM users
+            WHERE email = ?
+            LIMIT 1");
+
+        $query->execute([$email]);
+
+        return $query->fetch();
+    }
+
+    public function getUserByName(string $name)
+    {
+        $query = $this->db->prepare("
+            SELECT id
+            FROM users
+            WHERE name = ?
+            LIMIT 1");
+
+        $query->execute([$name]);
+
+        return $this->getUser($query->fetch()->id);
+    }
+
+    public function getUserByEmail(string $email)
+    {
+        $query = $this->db->prepare("
+            SELECT id
+            FROM users
+            WHERE email = ?
+            LIMIT 1");
+
+        $query->execute([$email]);
+
+        return $this->getUser($query->fetch()->id);
+    }
+
     public function signUp(array $params)
     {
         $this->insert('users', $params);
@@ -58,7 +108,7 @@ class UserModel extends \Prim\Model
 
     public function getUser(int $user_id)
     {
-        $query = $this->db->prepare("SELECT id, name FROM users WHERE id = :user_id LIMIT 1");
+        $query = $this->db->prepare("SELECT id, name, email FROM users WHERE id = :user_id LIMIT 1");
         $parameters = array(':user_id' => $user_id);
 
         $query->execute($parameters);

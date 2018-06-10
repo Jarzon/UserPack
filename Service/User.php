@@ -35,4 +35,9 @@ class User
             exit;
         }
     }
+
+    function hashPassword(string $email, string $password, string $name) : string
+    {
+        return hash('sha512', $email.$password.$name);
+    }
 }
