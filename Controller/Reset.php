@@ -34,11 +34,9 @@ class Reset extends User
                     $userModel->saveUserSettings(['reset' => $reset], $user->id);
 
                     try {
-                        $this->sendEmail($user->email, $user->name, 'Libellum - Password reset',
-"Hi, \r\n
-We have receive a request to reset your password. You can do so by going at this address: https://www.libellum.ca/reset/$user->email/$reset \r\n
-If you didn't request to reset your password, you can skip this message and your password is not going to be changed."
-                        );
+                        $this->view->design('email/reset', 'UserPack', ['user' => $values]);
+
+                        $this->sendEmail($user->email, $user->name, 'Libellum - Password reset', $this->view->section('default'));
                     } catch(\Exception $e) {
                         $this->addVar('message', ['alert', 'Something went wrong, we couldn\'t send the email.']);
                     }
@@ -96,21 +94,5 @@ If you didn't request to reset your password, you can skip this message and your
         }
 
         $this->design('reset/setPassword', 'UserPack', ['form' => $form]);
-    }
-
-    protected function sendEmail(string $email, string $name, string $subject, string $message) {
-        $transport = \Swift_SmtpTransport::newInstance($this->options['smtp_url'], $this->options['smtp_port'], $this->options['smtp_secure'])
-            ->setUsername($this->options['email'])
-            ->setPassword($this->options['smtp_password']);
-
-        $mailer = \Swift_Mailer::newInstance($transport);
-
-        $body = \Swift_Message::newInstance()
-            ->setSubject($subject)
-            ->setFrom([$this->options['email'] => $this->options['email_name']])
-            ->setTo([$email => $name])
-            ->setBody($message);
-
-        return $mailer->send($body);
     }
 }

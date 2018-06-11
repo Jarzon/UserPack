@@ -25,7 +25,8 @@ class Signup extends User
         $this->design('signup', 'UserPack', ['form' => $form]);
     }
 
-    protected function getForm() {
+    protected function getForm()
+    {
         $form = new Form($_POST);
 
         $form
@@ -38,24 +39,35 @@ class Signup extends User
         return $form;
     }
 
-    protected function submit(array $values = []) {
+    protected function submit(array $values = [])
+    {
         if(empty($values)) return false;
 
         $user = $this->getUserModel();
-
-        $values['password'] = $this->user->hashPassword($values['email'], $values['password'], $values['name']);
 
         if($user->exists($values['email'], $values['name'])) {
             $this->addVar('message', ['error', 'that email/name is already used by another account']);
             return false;
         }
 
+        $values['password'] = $this->user->hashPassword($values['email'], $values['password'], $values['name']);
+
         $id = $user->signup($values);
+
+        $this->welcomeEmail($values);
 
         return $this->signin($values, $id);
     }
 
-    protected function signin($values, $id) {
+    protected function welcomeEmail(array $values)
+    {
+        $this->view->design('email/signup', 'UserPack', ['user' => $values]);
+
+        $this->sendEmail($values['email'], $values['name'], 'Libellum - Password reset', $this->view->section('default'));
+    }
+
+    protected function signin($values, $id)
+    {
         $_SESSION['user_id'] = $id;
         $_SESSION['email'] = $values['email'];
         $_SESSION['name'] = $values['name'];
@@ -64,7 +76,8 @@ class Signup extends User
         return true;
     }
 
-    protected function redirection() {
+    protected function redirection()
+    {
         $this->redirect('/');
     }
 }
