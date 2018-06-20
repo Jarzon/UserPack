@@ -36,8 +36,8 @@ class User
         }
     }
 
-    function hashPassword(string $email, string $password, string $name) : string
+    function hashPassword(string $password) : string
     {
-        return hash('sha512', $email.$password.$name);
+        return password_hash($password, PASSWORD_ARGON2I);
     }
 }

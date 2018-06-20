@@ -45,14 +45,9 @@ class Signin extends User
 
         $user = $this->getUserModel();
 
-        if (!$infos = $user->signin([$values['name']])) {
-            $this->addVar('message', ['error', 'wrong password or username']);
-            return false;
-        }
+        $infos = $user->signin([$values['name']]);
 
-        $password = $this->user->hashPassword($infos->email, $values['password'], $infos->name);
-
-        if ($password !== $infos->password) {
+        if (!$infos || !password_verify($values['password'], $infos->password)) {
             $this->addVar('message', ['error', 'wrong password or username']);
             return false;
         }

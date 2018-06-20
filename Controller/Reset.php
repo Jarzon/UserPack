@@ -81,10 +81,13 @@ class Reset extends User
                 $values = $form->validation();
 
                 if($values['password1'] !== $values['password2']) {
-                    throw new \Exception('Passwords doesn\'t match.');
+                    throw new \Exception('The two passwords doesn\'t match.');
                 }
 
-                $userModel->saveUserSettings(['password' => $this->user->hashPassword($user->email, $values['password1'], $user->name), 'reset' => ''], $user->id);
+                $userModel->saveUserSettings([
+                    'password' => $this->user->hashPassword($values['password1']),
+                    'reset' => ''
+                ], $user->id);
 
                 $this->addVar('message', ['ok', 'Your password have been changed.']);
             }

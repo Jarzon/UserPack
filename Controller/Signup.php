@@ -50,7 +50,7 @@ class Signup extends User
             return false;
         }
 
-        $values['password'] = $this->user->hashPassword($values['email'], $values['password'], $values['name']);
+        $values['password'] = $this->user->hashPassword($values['password']);
 
         $id = $user->signup($values);
 
