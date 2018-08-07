@@ -42,7 +42,7 @@ class Settings extends User
             }
         }
 
-        $this->design('settings', 'UserPack', ['form' => $form]);
+        $this->render('settings', 'UserPack', ['form' => $form]);
     }
 
     protected function submit(array $values, $user)

@@ -22,7 +22,7 @@ class Signin extends User
             }
         }
 
-        $this->design('signin', 'UserPack', ['form' => $form]);
+        $this->render('signin', 'UserPack', ['form' => $form]);
     }
 
     protected function getForm()

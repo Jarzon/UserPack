@@ -12,7 +12,7 @@ class Admin extends User
             $user->addUser($_POST['name']);
         }
 
-        $this->design('admin/list', 'UserPack', ['users' => $user->getAllUsers()]);
+        $this->render('admin/list', 'UserPack', ['users' => $user->getAllUsers()]);
     }
 
     public function deleteUser(int $user_id)

@@ -34,7 +34,7 @@ class Reset extends User
                     $userModel->saveUserSettings(['reset' => $reset], $user->id);
 
                     try {
-                        $this->view->design('email/reset', 'UserPack', ['user' => $values]);
+                        $this->view->render('email/reset', 'UserPack', ['user' => $values]);
 
                         $this->sendEmail($user->email, $user->name, 'Libellum - Password reset', $this->view->section('default'));
                     } catch(\Exception $e) {
@@ -49,7 +49,7 @@ class Reset extends User
             }
         }
 
-        $this->design('reset/index', 'UserPack', ['form' => $form]);
+        $this->render('reset/index', 'UserPack', ['form' => $form]);
     }
 
     public function reset($email = false, $reset = false)
@@ -96,6 +96,6 @@ class Reset extends User
             }
         }
 
-        $this->design('reset/setPassword', 'UserPack', ['form' => $form]);
+        $this->render('reset/setPassword', 'UserPack', ['form' => $form]);
     }
 }

@@ -22,7 +22,7 @@ class Signup extends User
             }
         }
 
-        $this->design('signup', 'UserPack', ['form' => $form]);
+        $this->render('signup', 'UserPack', ['form' => $form]);
     }
 
     protected function getForm()
@@ -61,7 +61,7 @@ class Signup extends User
 
     protected function welcomeEmail(array $values)
     {
-        $this->view->design('email/signup', 'UserPack', ['user' => $values]);
+        $this->view->render('email/signup', 'UserPack', ['user' => $values]);
 
         $this->sendEmail($values['email'], $values['name'], 'Libellum - Password reset', $this->view->section('default'));
     }
