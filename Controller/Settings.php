@@ -42,7 +42,12 @@ class Settings extends User
             }
         }
 
-        $this->render('settings', 'UserPack', ['form' => $form]);
+        $this->view(['form' => $form]);
+    }
+
+    protected function view(array $vars)
+    {
+        $this->render('settings', 'UserPack', $vars);
     }
 
     protected function submit(array $values, $user)
