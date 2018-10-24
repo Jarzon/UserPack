@@ -15,18 +15,7 @@ class Admin extends User
         $this->render('admin/list', 'UserPack', ['users' => $user->getAllUsers()]);
     }
 
-    public function deleteUser(int $user_id)
-    {
-        $user = $this->getUserModel();
-
-        if (isset($user_id)) {
-            $user->deleteUser($user_id);
-        }
-
-        $this->redirect('/users');
-    }
-
-    public function updateUser(int $user_id)
+    public function show(int $user_id)
     {
         $user = $this->getUserModel();
 
@@ -34,7 +23,6 @@ class Admin extends User
             $user->updateUser($_POST['name'], $_POST['user_id']);
         }
 
-        $this->redirect('/users');
+        $this->render('admin/show', 'UserPack', ['user' => $user->getUser($user_id)]);
     }
-
 }
