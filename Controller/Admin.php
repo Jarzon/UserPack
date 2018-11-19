@@ -3,6 +3,15 @@ namespace UserPack\Controller;
 
 class Admin extends User
 {
+    /** @var $admin \PrimPack\Service\Admin */
+    protected $admin;
+
+    public function build() {
+        if(!$this->admin->isAdmin()) {
+            header("HTTP/1.1 403 Forbidden");exit;
+        }
+    }
+
     public function list(int $page = 1)
     {
         $user = $this->getUserModel();
