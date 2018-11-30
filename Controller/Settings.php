@@ -37,7 +37,7 @@ class Settings extends User
 
                 $this->message('ok', 'the settings have been saved');
             }
-            catch (\Exception $e) {
+            catch (\Jarzon\ValidationException $e) {
                 $this->message('error', $e->getMessage());
             }
         }

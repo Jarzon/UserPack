@@ -17,7 +17,7 @@ class Signup extends User
                     $this->redirection();
                 }
             }
-            catch (\Exception $e) {
+            catch (\Jarzon\ValidationException $e) {
                 $this->message('error', $e->getMessage());
             }
         }

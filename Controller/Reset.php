@@ -2,6 +2,7 @@
 namespace UserPack\Controller;
 
 use Jarzon\Form;
+use Jarzon\ValidationException;
 
 class Reset extends User
 {
@@ -25,7 +26,7 @@ class Reset extends User
             try {
                 $values = $form->validation();
             }
-            catch (\Exception $e) {
+            catch (ValidationException $e) {
                 $this->message('error', $e->getMessage());
             }
 
@@ -79,7 +80,7 @@ class Reset extends User
                 $values = $form->validation();
 
                 if($values['password1'] !== $values['password2']) {
-                    throw new \Exception('The two passwords doesn\'t match.');
+                    throw new ValidationException('The two passwords doesn\'t match.');
                 }
 
                 $userModel->saveUserSettings([
@@ -90,7 +91,7 @@ class Reset extends User
 
                 $this->message('ok', 'Your password have been changed.');
             }
-            catch (\Exception $e) {
+            catch (ValidationException $e) {
                 $this->message('error', $e->getMessage());
             }
         }
