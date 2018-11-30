@@ -74,21 +74,19 @@ class UserModel extends \Prim\Model
     {
         $this->insert('users', $params);
 
-        $userId = $this->signIn([$params['name']]);
-
-        return $userId->id;
+        return $this->signIn($params['name']);
     }
 
-    public function signIn($params)
+    public function signIn(string $name)
     {
         $query = $this->db->prepare("
             SELECT id, name, email, password, status
             FROM users
             WHERE name = ?");
 
-        $query->execute($params);
+        $query->execute($name);
 
-        return $query->fetch();
+        return $query->fetch()->id;
     }
 
 
