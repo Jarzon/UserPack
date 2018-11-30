@@ -18,7 +18,7 @@ class Signup extends User
                 }
             }
             catch (\Exception $e) {
-                $this->addVar('message', ['error', $e->getMessage()]);
+                $this->message('error', $e->getMessage());
             }
         }
 
@@ -46,7 +46,7 @@ class Signup extends User
         $user = $this->getUserModel();
 
         if($user->exists($values['email'], $values['name'])) {
-            $this->addVar('message', ['error', 'that email/name is already used by another account']);
+            $this->message('error', 'that email/name is already used by another account');
             return false;
         }
 

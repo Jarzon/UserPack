@@ -8,8 +8,7 @@ class Reset extends User
     public function index()
     {
         if($this->user->logged) {
-            header("location: /");
-            exit;
+            $this->redirect('/');
         }
 
         $userModel = $this->getUserModel();
@@ -25,27 +24,27 @@ class Reset extends User
         if ($form->submitted()) {
             try {
                 $values = $form->validation();
-
-                if($user = $userModel->getUserByEmail($values['email'])) {
-                    $this->addVar('message', ['ok', 'We have sent an email to reset your password at your email address.']);
-
-                    $reset = bin2hex(random_bytes(10)); // 20 chars
-
-                    $userModel->saveUserSettings(['reset' => $reset], $user->id);
-
-                    try {
-                        $this->view->render('email/reset', 'UserPack', ['user' => $values]);
-
-                        $this->sendEmail($user->email, $user->name, 'Libellum - Password reset', $this->view->section('default'));
-                    } catch(\Exception $e) {
-                        $this->addVar('message', ['alert', 'Something went wrong, we couldn\'t send the email.']);
-                    }
-                } else {
-                    $this->addVar('message', ['error', 'We don\'t have that email/username']);
-                }
             }
             catch (\Exception $e) {
-                $this->addVar('message', ['error', $e->getMessage()]);
+                $this->message('error', $e->getMessage());
+            }
+
+            if($user = $userModel->getUserByEmail($values['email'])) {
+                $this->message('ok', 'We have sent an email to reset your password at your email address.');
+
+                $reset = bin2hex(random_bytes(10)); // 20 chars
+
+                $userModel->saveUserSettings(['reset' => $reset], $user->id);
+
+                try {
+                    $this->view->render('email/reset', 'UserPack', ['user' => $values]);
+
+                    $this->sendEmail($user->email, $user->name, 'Libellum - Password reset', $this->view->section('default'));
+                } catch(\Exception $e) {
+                    $this->message('alert', 'Something went wrong, we couldn\'t send the email.');
+                }
+            } else {
+                $this->message('error', 'We don\'t have that email/username');
             }
         }
 
@@ -55,8 +54,7 @@ class Reset extends User
     public function reset($email = false, $reset = false)
     {
         if($this->user->logged || !$email || !$reset) {
-            header("location: /");
-            exit;
+            $this->redirect('/');
         }
 
         $userModel = $this->getUserModel();
@@ -89,10 +87,11 @@ class Reset extends User
                     'reset' => ''
                 ], $user->id);
 
-                $this->addVar('message', ['ok', 'Your password have been changed.']);
+
+                $this->message('ok', 'Your password have been changed.');
             }
             catch (\Exception $e) {
-                $this->addVar('message', ['error', $e->getMessage()]);
+                $this->message('error', $e->getMessage());
             }
         }
 

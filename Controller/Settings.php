@@ -35,10 +35,10 @@ class Settings extends User
 
                 $this->submit($values, $user);
 
-                $this->addVar('message', ['ok', 'the settings have been saved']);
+                $this->message('ok', 'the settings have been saved');
             }
             catch (\Exception $e) {
-                $this->addVar('message', ['error', $e->getMessage()]);
+                $this->message('error', $e->getMessage());
             }
         }
 

@@ -18,7 +18,7 @@ class Signin extends User
                 }
             }
             catch (\Exception $e) {
-                $this->addVar('message', ['error', $e->getMessage()]);
+                $this->message('error', $e->getMessage());
             }
         }
 
@@ -48,7 +48,7 @@ class Signin extends User
         $infos = $user->signin([$values['name']]);
 
         if (!$infos || !password_verify($values['password'], $infos->password)) {
-            $this->addVar('message', ['error', 'wrong password or username']);
+            $this->message('error', 'wrong password or username');
             return false;
         }
 
