@@ -5,7 +5,7 @@ class UserModel extends \Prim\Model
 {
     public function exists(string $email, string $name) : bool
     {
-        $query = $this->db->prepare("
+        $query = $this->prepare("
             SELECT id
             FROM users
             WHERE email = ? OR name = ?
@@ -29,7 +29,7 @@ class UserModel extends \Prim\Model
 
     public function getUserResetByEmail(string $email)
     {
-        $query = $this->db->prepare("
+        $query = $this->prepare("
             SELECT id, reset
             FROM users
             WHERE email = ?
@@ -42,7 +42,7 @@ class UserModel extends \Prim\Model
 
     public function getUserByName(string $name)
     {
-        $query = $this->db->prepare("
+        $query = $this->prepare("
             SELECT id
             FROM users
             WHERE name = ?
@@ -55,7 +55,7 @@ class UserModel extends \Prim\Model
 
     public function getUserByEmail(string $email)
     {
-        $query = $this->db->prepare("
+        $query = $this->prepare("
             SELECT id
             FROM users
             WHERE email = ?
@@ -79,12 +79,12 @@ class UserModel extends \Prim\Model
 
     public function signIn(string $name)
     {
-        $query = $this->db->prepare("
+        $query = $this->prepare("
             SELECT id, name, email, password, status
             FROM users
             WHERE name = ?");
 
-        $query->execute($name);
+        $query->execute([$name]);
 
         return $query->fetch()->id;
     }
@@ -92,7 +92,7 @@ class UserModel extends \Prim\Model
 
     public function getAllUsers()
     {
-        $query = $this->db->prepare("
+        $query = $this->prepare("
             SELECT id, name
             FROM users");
         $query->execute();
@@ -102,18 +102,16 @@ class UserModel extends \Prim\Model
 
     public function deleteUser(int $user_id)
     {
-        $query = $this->db->prepare("DELETE FROM users WHERE id = :user_id");
-        $parameters = array(':user_id' => user_id);
+        $query = $this->prepare("DELETE FROM users WHERE id = ?");
 
-        $query->execute($parameters);
+        $query->execute([$user_id]);
     }
 
     public function getUser(int $user_id)
     {
-        $query = $this->db->prepare("SELECT id, name, email FROM users WHERE id = :user_id LIMIT 1");
-        $parameters = array(':user_id' => $user_id);
+        $query = $this->prepare("SELECT id, name, email FROM users WHERE id = ? LIMIT 1");
 
-        $query->execute($parameters);
+        $query->execute([$user_id]);
 
         return $query->fetch();
     }
@@ -125,7 +123,7 @@ class UserModel extends \Prim\Model
 
     public function getAmountOfUsers()
     {
-        $query = $this->db->prepare("SELECT COUNT(id) AS amount_of_users FROM users");
+        $query = $this->prepare("SELECT COUNT(id) AS amount_of_users FROM users");
         $query->execute();
 
         return $query->fetch()->amount_of_users;
@@ -133,7 +131,7 @@ class UserModel extends \Prim\Model
 
     public function getUserSettings(int $user_id)
     {
-        $query = $this->db->prepare("SELECT email FROM users WHERE id = ? LIMIT 1");
+        $query = $this->prepare("SELECT email FROM users WHERE id = ? LIMIT 1");
 
         $query->execute([$user_id]);
 
