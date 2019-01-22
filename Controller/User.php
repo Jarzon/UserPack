@@ -5,6 +5,15 @@ use Prim\Controller;
 
 class User extends Controller
 {
+    protected $user;
+
+    public function __construct(\Prim\View $view, \Prim\Container $container, array $options, \UserPack\Service\User $user)
+    {
+        parent::__construct($view, $container, $options);
+
+        $this->user = $user;
+    }
+
     /**
      * @return \UserPack\Model\UserModel
      */

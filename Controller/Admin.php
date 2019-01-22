@@ -3,10 +3,14 @@ namespace UserPack\Controller;
 
 class Admin extends User
 {
-    /** @var $admin \PrimPack\Service\Admin */
     protected $admin;
 
-    public function build() {
+    public function __construct(\Prim\View $view, \Prim\Container $container, array $options, User $user, Admin $admin)
+    {
+        parent::__construct($view, $container, $options, $user);
+
+        $this->admin = $admin;
+
         if(!$this->admin->isAdmin()) {
             header("HTTP/1.1 403 Forbidden");exit;
         }
