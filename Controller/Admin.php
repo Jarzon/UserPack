@@ -5,7 +5,7 @@ class Admin extends User
 {
     protected $admin;
 
-    public function __construct(\Prim\View $view, \Prim\Container $container, array $options, \UserPack\Service\User $user, Admin $admin)
+    public function __construct(\Prim\View $view, \Prim\Container $container, array $options, \UserPack\Service\User $user, \PrimPack\Service\Admin $admin)
     {
         parent::__construct($view, $container, $options, $user);
 
