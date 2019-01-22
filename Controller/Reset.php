@@ -40,7 +40,7 @@ class Reset extends User
                 try {
                     $message = $this->view->fetch('email/reset', 'UserPack', ['user' => $user]);
 
-                    $this->sendEmail($user->email, $user->name, 'Password reset', $message);
+                    $this->sendEmail($user->email, $user->name, "{$this->options['project_name']} - Password reset", $message);
                 } catch(\Exception $e) {
                     $this->message('alert', 'Something went wrong, we couldn\'t send the email.');
                 }

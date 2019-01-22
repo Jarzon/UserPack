@@ -59,11 +59,11 @@ class Signup extends User
         return $this->signin($values, $id);
     }
 
-    protected function welcomeEmail(array $values)
+    protected function welcomeEmail(array $user)
     {
-        $this->view->render('email/signup', 'UserPack', ['user' => $values]);
+        $message = $this->view->fetch('email/signup', 'UserPack', ['user' => $user]);
 
-        $this->sendEmail($values['email'], $values['name'], 'Libellum - Password reset', $this->view->section('default'));
+        $this->sendEmail($user['email'], $user['name'], "{$this->options['project_name']} - Signup", $message);
     }
 
     protected function signin($values, $id)
