@@ -38,7 +38,7 @@ class Reset extends User
                 $userModel->saveUserSettings(['reset' => $reset], $user->id);
 
                 try {
-                    $this->view->render('email/reset', 'UserPack', ['user' => $values]);
+                    $this->view->render('email/reset', 'UserPack', ['user' => $user]);
 
                     $this->sendEmail($user->email, $user->name, 'Libellum - Password reset', $this->view->section('default'));
                 } catch(\Exception $e) {
