@@ -38,7 +38,7 @@ class Reset extends User
                 $userModel->saveUserSettings(['reset' => $reset], $user->id);
 
                 try {
-                    $message = $this->view->fetch('email/reset', 'UserPack', ['user' => $user]);
+                    $message = $this->view->fetch('email/reset', 'UserPack', ['user' => $user, 'reset' => $reset]);
 
                     $this->sendEmail($user->email, $user->name, "{$this->options['project_name']} - Password reset", $message);
                 } catch(\Exception $e) {
