@@ -33,7 +33,12 @@ class Admin extends User
         $user = $this->getUserModel();
 
         if (isset($_POST['submit_update_user'])) {
-            $user->updateUser($_POST['name'], $_POST['user_id']);
+            $post = $_POST;
+
+            unset($post['id']);
+            unset($post['submit_update_user']);
+
+            $user->updateUser($post, $_POST['id']);
         }
 
         $this->render('admin/show', 'UserPack', ['user' => $user->getUser($user_id)]);

@@ -109,16 +109,16 @@ class UserModel extends \Prim\Model
 
     public function getUser(int $user_id)
     {
-        $query = $this->prepare("SELECT id, name, email FROM users WHERE id = ? LIMIT 1");
+        $query = $this->prepare("SELECT * FROM users WHERE id = ? LIMIT 1");
 
         $query->execute([$user_id]);
 
         return $query->fetch();
     }
 
-    public function updateUser(string $name, int $user_id)
+    public function updateUser(array $post, int $user_id)
     {
-        $this->update('users', ['name' => $name], 'id = ?', [$user_id]);
+        $this->update('users', $post, 'id = ?', [$user_id]);
     }
 
     public function getAmountOfUsers()
