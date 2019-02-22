@@ -63,7 +63,15 @@ class Signin extends User
 
         if ($values['remember']) {
             $params = session_get_cookie_params();
-            setcookie(session_name(), $_COOKIE[session_name()], time() + 60 * 60 * 24 * 30 * 3, $params['path'], $params['domain'], $params['secure'], $params['httponly']);
+            setcookie(
+                session_name(),
+                $_COOKIE[session_name()],
+                time() + 60 * 60 * 24 * 30 * 3,
+                $params['path'],
+                $params['domain'],
+                ($this->options['url_protocol'] === 'https://'? true: false),
+                $params['httponly']
+            );
         }
 
         return true;
