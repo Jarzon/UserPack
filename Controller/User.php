@@ -2,23 +2,19 @@
 namespace UserPack\Controller;
 
 use Prim\Controller;
+use UserPack\Model\UserModel;
 
 class User extends Controller
 {
     protected $user;
+    protected $userModel;
 
-    public function __construct(\Prim\View $view, \Prim\Container $container, array $options, \UserPack\Service\User $user)
+    public function __construct(\Prim\View $view, \Prim\Container $container, array $options, \UserPack\Service\User $user, UserModel $userModel)
     {
         parent::__construct($view, $container, $options);
 
         $this->user = $user;
-    }
-
-    /**
-     * @return \UserPack\Model\UserModel
-     */
-    public function getUserModel() {
-        return $this->getModel('UserModel');
+        $this->userModel = $userModel;
     }
 
     protected function sendEmail(string $email, string $name, string $subject, string $message) {

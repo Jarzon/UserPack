@@ -23,9 +23,7 @@ class Settings extends User
     {
         $this->user->verification();
 
-        $user = $this->getUserModel();
-
-        $settings = $user->getUserSettings($this->user->id);
+        $settings = $this->userModel->getUserSettings($this->user->id);
 
         $form = $this->getForm($settings);
 
@@ -33,7 +31,7 @@ class Settings extends User
             try {
                 $values = $form->validation();
 
-                $this->submit($values, $user);
+                $this->submit($values);
 
                 $this->message('ok', 'the settings have been saved');
             }
@@ -50,8 +48,8 @@ class Settings extends User
         $this->render('settings', 'UserPack', $vars);
     }
 
-    protected function submit(array $values, $user)
+    protected function submit(array $values)
     {
-        $user->saveUserSettings($values, $this->user->id);
+        $this->userModel->saveUserSettings($values, $this->user->id);
     }
 }

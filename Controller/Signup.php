@@ -43,16 +43,14 @@ class Signup extends User
     {
         if(empty($values)) return false;
 
-        $user = $this->getUserModel();
-
-        if($user->exists($values['email'], $values['name'])) {
+        if($this->userModel->exists($values['email'], $values['name'])) {
             $this->message('error', 'that email/name is already used by another account');
             return false;
         }
 
         $values['password'] = $this->user->hashPassword($values['password']);
 
-        $id = $user->signup($values);
+        $id = $this->userModel->signup($values);
 
         $this->welcomeEmail($values);
 

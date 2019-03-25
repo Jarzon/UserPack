@@ -12,8 +12,6 @@ class Reset extends User
             $this->redirect('/');
         }
 
-        $userModel = $this->getUserModel();
-
         $form = new Form($_POST);
 
         $form
@@ -30,12 +28,12 @@ class Reset extends User
                 $this->message('error', $e->getMessage());
             }
 
-            if($user = $userModel->getUserByEmail($values['email'])) {
+            if($user = $this->userModel->getUserByEmail($values['email'])) {
                 $this->message('ok', 'We have sent an email to reset your password at your email address.');
 
                 $reset = bin2hex(random_bytes(10)); // 20 chars
 
-                $userModel->saveUserSettings(['reset' => $reset], $user->id);
+                $this->userModel->saveUserSettings(['reset' => $reset], $user->id);
 
                 try {
                     $message = $this->view->fetch('email/reset', 'UserPack', ['user' => $user, 'reset' => $reset]);
@@ -58,13 +56,11 @@ class Reset extends User
             $this->redirect('/');
         }
 
-        $userModel = $this->getUserModel();
-
-        if(!$userModel->canResetPassword($email, $reset)) {
+        if(!$this->userModel->canResetPassword($email, $reset)) {
             throw new \Exception("Unmatching email/reset token");
         }
 
-        $user = $userModel->getUserByEmail($email);
+        $user = $this->userModel->getUserByEmail($email);
 
         $form = new Form($_POST);
 
@@ -83,7 +79,7 @@ class Reset extends User
                     throw new ValidationException('The two passwords doesn\'t match.');
                 }
 
-                $userModel->saveUserSettings([
+                $this->userModel->saveUserSettings([
                     'password' => $this->user->hashPassword($values['password1']),
                     'reset' => ''
                 ], $user->id);
