@@ -2,6 +2,7 @@
 namespace UserPack\Controller;
 
 use Prim\Controller;
+use Jarzon\Localization;
 use UserPack\Model\UserModel;
 
 class User extends Controller
@@ -9,7 +10,7 @@ class User extends Controller
     protected $user;
     protected $userModel;
 
-    public function __construct(\Prim\View $view, \Prim\Container $container, array $options, \UserPack\Service\User $user, UserModel $userModel)
+    public function __construct(\Prim\View $view, \Prim\Container $container, array $options, \UserPack\Service\User $user, Localization $local, UserModel $userModel)
     {
         parent::__construct($view, $container, $options);
 
