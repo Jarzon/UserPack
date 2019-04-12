@@ -72,9 +72,7 @@ class UserModel extends \Prim\Model
 
     public function signUp(array $params)
     {
-        $this->insert('users', $params);
-
-        return $this->signIn($params['name']);
+        return $this->insert('users', $params);
     }
 
     public function signIn(string $name)
