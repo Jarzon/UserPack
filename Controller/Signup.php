@@ -69,6 +69,7 @@ class Signup extends User
         $_SESSION['user_id'] = $id;
         $_SESSION['email'] = $values['email'];
         $_SESSION['name'] = $values['name'];
+        $_SESSION['isAdmin'] = false;
         $_SESSION['level'] = 0;
 
         return true;
