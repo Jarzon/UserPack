@@ -3,7 +3,7 @@ use UserPack\Controller\{Admin, Reset, Settings, Signin, Signout, Signup, User};
 
 $injection = function($dic) {
     return [
-        $dic->getUserService(),
+        $dic->get('userService'),
         $dic->model('UserPack\UserModel')
     ];
 };
@@ -18,9 +18,9 @@ return [
     
     Admin::class => function($dic) {
         return [
-            $dic->getUserService(),
+            $dic->get('userService'),
             $dic->model('UserPack\UserModel'),
-            $dic->getAdminService(),
+            $dic->get('adminService'),
         ];
     },
 ];

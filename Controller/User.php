@@ -10,9 +10,9 @@ class User extends Controller
     protected $user;
     protected $userModel;
 
-    public function __construct(\Prim\View $view, \Prim\Container $container, array $options, \UserPack\Service\User $user, Localization $local, UserModel $userModel)
+    public function __construct(\Prim\View $view, array $options, \UserPack\Service\User $user, Localization $local, UserModel $userModel)
     {
-        parent::__construct($view, $container, $options);
+        parent::__construct($view, $options);
 
         $this->user = $user;
         $this->userModel = $userModel;
