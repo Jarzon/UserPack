@@ -92,7 +92,8 @@ class UserModel extends \Prim\Model
     {
         $query = $this->prepare("
             SELECT id, name
-            FROM users");
+            FROM users
+            ORDER BY id DESC");
         $query->execute();
 
         return $query->fetchAll();
