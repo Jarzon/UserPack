@@ -2,9 +2,42 @@
 namespace UserPack\Controller;
 
 use Jarzon\Form;
+use Prim\AbstractController;
+use Prim\View;
+use UserPack\Model\UserModel;
+use UserPack\Service\User;
 
-class Signup extends User
+class Signup extends AbstractController
 {
+    private $user;
+    private $userModel;
+
+    public function __construct(View $view, array $options,
+                                User $user, UserModel $userModel)
+    {
+        parent::__construct($view, $options);
+
+        $this->user = $user;
+        $this->userModel = $userModel;
+    }
+
+    protected function sendEmail(string $email, string $name, string $subject, string $message)
+    {
+        $transport = \Swift_SmtpTransport::newInstance($this->options['smtp_url'], $this->options['smtp_port'], $this->options['smtp_secure'])
+            ->setUsername($this->options['email'])
+            ->setPassword($this->options['smtp_password']);
+
+        $mailer = \Swift_Mailer::newInstance($transport);
+
+        $body = \Swift_Message::newInstance()
+            ->setSubject($subject)
+            ->setFrom([$this->options['email'] => $this->options['email_name']])
+            ->setTo([$email => $name])
+            ->setBody($message);
+
+        return $mailer->send($body);
+    }
+
     public function index()
     {
         $form = $this->getForm();

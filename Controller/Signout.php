@@ -1,25 +1,34 @@
 <?php
 namespace UserPack\Controller;
 
-class Signout extends User
+use Prim\AbstractController;
+use Prim\View;
+use UserPack\Model\UserModel;
+
+class Signout extends AbstractController
 {
+    private $userModel;
+
+    public function __construct(View $view, array $options, UserModel $userModel)
+    {
+        parent::__construct($view, $options);
+
+        $this->userModel = $userModel;
+    }
+
     public function index()
     {
-        $this->user->verification();
+        $_SESSION = [];
 
-        if($this->user->logged) {
-            $_SESSION = [];
-
-            if (ini_get('session.use_cookies')) {
-                    $params = session_get_cookie_params();
-                    setcookie(session_name(), '', time() - 42000,
-                    $params['path'], $params['domain'],
-                    $params['secure'], $params['httponly']
-                );
-            }
-
-            session_destroy();
+        if (ini_get('session.use_cookies')) {
+                $params = session_get_cookie_params();
+                setcookie(session_name(), '', time() - 42000,
+                $params['path'], $params['domain'],
+                $params['secure'], $params['httponly']
+            );
         }
+
+        session_destroy();
 
         $this->redirection();
     }

@@ -3,15 +3,44 @@ namespace UserPack\Controller;
 
 use Jarzon\Form;
 use Jarzon\ValidationException;
+use Prim\AbstractController;
+use Prim\View;
+use UserPack\Model\UserModel;
+use UserPack\Service\User;
 
-class Reset extends User
+class Reset extends AbstractController
 {
+    private $user;
+    private $userModel;
+
+    public function __construct(View $view, array $options,
+                                User $user, UserModel $userModel)
+    {
+        parent::__construct($view, $options);
+
+        $this->user = $user;
+        $this->userModel = $userModel;
+    }
+
+    protected function sendEmail(string $email, string $name, string $subject, string $message)
+    {
+        $transport = \Swift_SmtpTransport::newInstance($this->options['smtp_url'], $this->options['smtp_port'], $this->options['smtp_secure'])
+            ->setUsername($this->options['email'])
+            ->setPassword($this->options['smtp_password']);
+
+        $mailer = \Swift_Mailer::newInstance($transport);
+
+        $body = \Swift_Message::newInstance()
+            ->setSubject($subject)
+            ->setFrom([$this->options['email'] => $this->options['email_name']])
+            ->setTo([$email => $name])
+            ->setBody($message);
+
+        return $mailer->send($body);
+    }
+
     public function index()
     {
-        if($this->user->logged) {
-            $this->redirect('/');
-        }
-
         $form = new Form($_POST);
 
         $form
@@ -52,7 +81,7 @@ class Reset extends User
 
     public function reset($email = false, $reset = false)
     {
-        if($this->user->logged || !$email || !$reset) {
+        if(!$email || !$reset) {
             $this->redirect('/');
         }
 
@@ -82,7 +111,7 @@ class Reset extends User
                 $this->userModel->saveUserSettings([
                     'password' => $this->user->hashPassword($values['password1']),
                     'reset' => ''
-                ], $user->id);
+                ]);
 
 
                 $this->message('ok', 'Your password have been changed.');

@@ -2,9 +2,21 @@
 namespace UserPack\Controller;
 
 use Jarzon\Form;
+use Prim\AbstractController;
+use Prim\View;
+use UserPack\Model\UserModel;
 
-class Signin extends User
+class Signin extends AbstractController
 {
+    private $userModel;
+
+    public function __construct(View $view, array $options, UserModel $userModel)
+    {
+        parent::__construct($view, $options);
+
+        $this->userModel = $userModel;
+    }
+
     public function index()
     {
         $form = $this->getForm();

@@ -1,24 +1,21 @@
 <?php
 namespace UserPack\Controller;
 
+use Prim\AbstractController;
 use Prim\View;
 use UserPack\Model\UserModel;
 
-class Admin extends User
+class Admin extends AbstractController
 {
     protected $admin;
+    private $userModel;
 
-    public function __construct(View $view, array $options, \UserPack\Service\User $user,
+    public function __construct(View $view, array $options,
                                 UserModel $userModel, \PrimPack\Service\Admin $admin)
     {
-        parent::__construct($view, $options, $user, $userModel);
-
+        parent::__construct($view, $options, $userModel);
 
         $this->admin = $admin;
-
-        if(!$user->logged || !$this->admin->isAdmin()) {
-            header("HTTP/1.1 403 Forbidden");exit;
-        }
     }
 
     public function list(int $page = 1)

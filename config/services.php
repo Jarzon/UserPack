@@ -1,26 +1,54 @@
 <?php
-use UserPack\Controller\{Admin, Reset, Settings, Signin, Signout, Signup, User};
+use UserPack\Controller\{Admin, Reset, Settings, Signin, Signout, Signup};
 
-$injection = function($dic) {
+$basicInjection = function($dic) {
     return [
-        $dic->get('userService'),
+        $dic->model('UserPack\UserModel')
+    ];
+};
+
+$injectionPlusVerification = function($dic) {
+    $dic->get('userService')->verification();
+
+    return [
         $dic->model('UserPack\UserModel')
     ];
 };
 
 return [
-    Reset::class => $injection,
-    Settings::class => $injection,
-    Signin::class => $injection,
-    Signout::class => $injection,
-    Signup::class => $injection,
-    User::class => $injection,
-    
-    Admin::class => function($dic) {
+    Signup::class => function($dic) {
         return [
             $dic->get('userService'),
+            $dic->model('UserPack\UserModel')
+        ];
+    },
+    Signin::class => $basicInjection,
+    Reset::class => function($dic) {
+        $user = $dic->get('userService');
+
+        if(!$user->logged) {
+            header("Location: /");
+            exit;
+        }
+
+        return [
+            $user,
+            $dic->model('UserPack\UserModel')
+        ];
+    },
+    Signout::class => $injectionPlusVerification,
+    Settings::class => $injectionPlusVerification,
+    
+    Admin::class => function($dic) {
+        $dic->get('userService')->verification();
+
+        if(!$dic->get('adminService')->isAdmin()) {
+            header("HTTP/1.1 403 Forbidden");
+            exit;
+        }
+
+        return [
             $dic->model('UserPack\UserModel'),
-            $dic->get('adminService'),
         ];
     },
 ];

@@ -2,9 +2,21 @@
 namespace UserPack\Controller;
 
 use Jarzon\Form;
+use Prim\AbstractController;
+use Prim\View;
+use UserPack\Model\UserModel;
 
-class Settings extends User
+class Settings extends AbstractController
 {
+    private $userModel;
+
+    public function __construct(View $view, array $options, UserModel $userModel)
+    {
+        parent::__construct($view, $options);
+
+        $this->userModel = $userModel;
+    }
+
     public function getForm($settings) {
         $form = new Form($_POST);
 
@@ -21,9 +33,7 @@ class Settings extends User
 
     public function index()
     {
-        $this->user->verification();
-
-        $settings = $this->userModel->getUserSettings($this->user->id);
+        $settings = $this->userModel->getUserSettings();
 
         $form = $this->getForm($settings);
 
@@ -50,6 +60,6 @@ class Settings extends User
 
     protected function submit(array $values)
     {
-        $this->userModel->saveUserSettings($values, $this->user->id);
+        $this->userModel->saveUserSettings($values);
     }
 }
