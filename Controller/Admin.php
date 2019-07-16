@@ -1,16 +1,17 @@
 <?php
 namespace UserPack\Controller;
 
-use Jarzon\Localization;
+use Prim\View;
 use UserPack\Model\UserModel;
 
 class Admin extends User
 {
     protected $admin;
 
-    public function __construct(\Prim\View $view, array $options, \UserPack\Service\User $user, Localization $local, UserModel $userModel, \PrimPack\Service\Admin $admin)
+    public function __construct(View $view, array $options, \UserPack\Service\User $user,
+                                UserModel $userModel, \PrimPack\Service\Admin $admin)
     {
-        parent::__construct($view, $options, $user, $local, $userModel);
+        parent::__construct($view, $options, $user, $userModel);
 
 
         $this->admin = $admin;
