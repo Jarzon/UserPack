@@ -13,8 +13,9 @@ class Admin extends AbstractController
     public function __construct(View $view, array $options,
                                 UserModel $userModel, \PrimPack\Service\Admin $admin)
     {
-        parent::__construct($view, $options, $userModel);
+        parent::__construct($view, $options);
 
+        $this->userModel = $userModel;
         $this->admin = $admin;
     }
 
