@@ -8,7 +8,7 @@ use UserPack\Model\UserModel;
 class Admin extends AbstractController
 {
     protected $admin;
-    private $userModel;
+    protected $userModel;
 
     public function __construct(View $view, array $options,
                                 UserModel $userModel, \PrimPack\Service\Admin $admin)

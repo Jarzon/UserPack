@@ -8,7 +8,7 @@ use UserPack\Model\UserModel;
 
 class Settings extends AbstractController
 {
-    private $userModel;
+    protected $userModel;
 
     public function __construct(View $view, array $options, UserModel $userModel)
     {

@@ -9,8 +9,8 @@ use UserPack\Service\User;
 
 class Signup extends AbstractController
 {
-    private $user;
-    private $userModel;
+    protected $user;
+    protected $userModel;
 
     public function __construct(View $view, array $options,
                                 User $user, UserModel $userModel)
