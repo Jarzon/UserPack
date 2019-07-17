@@ -62,7 +62,9 @@ class Reset extends AbstractController
 
                 $reset = bin2hex(random_bytes(10)); // 20 chars
 
-                $this->userModel->saveUserSettings(['reset' => $reset], $user->id);
+                $this->userModel->user->id = $user->id;
+
+                $this->userModel->saveUserSettings(['reset' => $reset]);
 
                 try {
                     $message = $this->view->fetch('email/reset', 'UserPack', ['user' => $user, 'reset' => $reset]);
