@@ -44,7 +44,7 @@ class Signin extends AbstractController
         $form
             ->text('name')->required()
             ->password('password')->required()
-            ->checkbox('remember')->value(true)
+            ->checkbox('remember')->value(true)->selected()
 
             ->submit();
 
