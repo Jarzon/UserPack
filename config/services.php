@@ -3,6 +3,7 @@ use UserPack\Controller\{Admin, Reset, Settings, Signin, Signout, Signup};
 
 $basicInjection = function($dic) {
     return [
+        $dic->get('userService'),
         $dic->model('UserPack\UserModel')
     ];
 };
@@ -16,12 +17,7 @@ $injectionPlusVerification = function($dic) {
 };
 
 return [
-    Signup::class => function($dic) {
-        return [
-            $dic->get('userService'),
-            $dic->model('UserPack\UserModel')
-        ];
-    },
+    Signup::class => $basicInjection,
     Signin::class => $basicInjection,
     Reset::class => function($dic) {
         $user = $dic->get('userService');

@@ -5,15 +5,19 @@ use Jarzon\Form;
 use Prim\AbstractController;
 use Prim\View;
 use UserPack\Model\UserModel;
+use UserPack\Service\User;
 
 class Signin extends AbstractController
 {
+    protected $user;
     protected $userModel;
 
-    public function __construct(View $view, array $options, UserModel $userModel)
+    public function __construct(View $view, array $options,
+                                User $user, UserModel $userModel)
     {
         parent::__construct($view, $options);
 
+        $this->user = $user;
         $this->userModel = $userModel;
     }
 
@@ -62,29 +66,7 @@ class Signin extends AbstractController
             return false;
         }
 
-        return $this->signin($values, $infos);
-    }
-
-    protected function signin($values, $infos) {
-        $_SESSION['user_id'] = $infos->id;
-        $_SESSION['email'] = $infos->email;
-        $_SESSION['name'] = $infos->name;
-        $_SESSION['status'] = $infos->status;
-
-        if ($values['remember']) {
-            $params = session_get_cookie_params();
-            setcookie(
-                session_name(),
-                $_COOKIE[session_name()],
-                time() + 60 * 60 * 24 * 30 * 3,
-                $params['path'],
-                $params['domain'],
-                ($this->options['url_protocol'] === 'https://'? true: false),
-                $params['httponly']
-            );
-        }
-
-        return true;
+        return $this->user->signin($infos->id, $infos->email, $infos->name, $infos->status, $values['status'] >= 4, $values['remember']);
     }
 
     protected function redirection() {

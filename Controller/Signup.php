@@ -87,7 +87,7 @@ class Signup extends AbstractController
 
         $this->welcomeEmail($values);
 
-        return $this->signin($values, $id);
+        return $this->user->signin((int)$id, $values['email'], $values['name'], $values['status'], false, false);
     }
 
     protected function welcomeEmail(array $user)
@@ -95,17 +95,6 @@ class Signup extends AbstractController
         $message = $this->view->fetch('email/signup', 'UserPack', ['user' => $user]);
 
         $this->sendEmail($user['email'], $user['name'], "{$this->options['project_name']} - Signup", $message);
-    }
-
-    protected function signin($values, $id)
-    {
-        $_SESSION['user_id'] = $id;
-        $_SESSION['email'] = $values['email'];
-        $_SESSION['name'] = $values['name'];
-        $_SESSION['isAdmin'] = false;
-        $_SESSION['level'] = 0;
-
-        return true;
     }
 
     protected function redirection()
