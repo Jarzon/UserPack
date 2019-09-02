@@ -62,9 +62,7 @@ class Reset extends AbstractController
 
                 $reset = bin2hex(random_bytes(10)); // 20 chars
 
-                $this->userModel->user->id = $user->id;
-
-                $this->userModel->saveUserSettings(['reset' => $reset]);
+                $this->userModel->updateUser(['reset' => $reset], $user->id);
 
                 try {
                     $message = $this->view->fetch('email/reset', 'UserPack', ['user' => $user, 'reset' => $reset]);
@@ -110,11 +108,10 @@ class Reset extends AbstractController
                     throw new ValidationException('The two passwords doesn\'t match.');
                 }
 
-                $this->userModel->saveUserSettings([
+                $this->userModel->updateUser([
                     'password' => $this->user->hashPassword($values['password1']),
                     'reset' => ''
-                ]);
-
+                ], $user->id);
 
                 $this->message('ok', 'Your password have been changed.');
             }

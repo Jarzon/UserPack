@@ -115,9 +115,9 @@ class UserModel extends \Prim\Model
         return $query->fetch();
     }
 
-    public function updateUser(array $post, int $user_id)
+    public function updateUser(array $post, ?int $user_id)
     {
-        $this->update('users', $post, 'id = ?', [$user_id]);
+        $this->update('users', $post, 'id = ?', [$user_id ?? $this->user->id]);
     }
 
     public function getAmountOfUsers()
@@ -135,10 +135,5 @@ class UserModel extends \Prim\Model
         $query->execute([$this->user->id]);
 
         return $query->fetch();
-    }
-
-    public function saveUserSettings(array $values)
-    {
-        $this->update('users', $values, 'id = ?', [$this->user->id]);
     }
 }

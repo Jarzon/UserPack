@@ -60,7 +60,7 @@ class Settings extends AbstractController
 
     protected function submit(array $values): bool
     {
-        $this->userModel->saveUserSettings($values);
+        $this->userModel->updateUser($values, null);
 
         return true;
     }
