@@ -41,9 +41,9 @@ class Settings extends AbstractController
             try {
                 $values = $form->validation();
 
-                $this->submit($values);
-
-                $this->message('ok', 'the settings have been saved');
+                if($this->submit($values)) {
+                    $this->message('ok', 'the settings have been saved');
+                }
             }
             catch (\Jarzon\ValidationException $e) {
                 $this->message('error', $e->getMessage());
@@ -58,8 +58,10 @@ class Settings extends AbstractController
         $this->render('settings', 'UserPack', $vars);
     }
 
-    protected function submit(array $values)
+    protected function submit(array $values): bool
     {
         $this->userModel->saveUserSettings($values);
+
+        return true;
     }
 }
