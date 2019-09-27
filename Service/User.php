@@ -20,14 +20,13 @@ class User
         }
 
         if(isset($_SESSION['user_id']) && $_SESSION['user_id'] > 0) {
-            $this->logged = true;
-            $this->id = $_SESSION['user_id'];
+            $this->populateLoggedInUser();
         }
 
         $this->populateView();
     }
 
-    function signin(int $id, string $email, string $name, int $status, bool $isAdmin, bool $remember) {
+    public function signin(int $id, string $email, string $name, int $status, bool $isAdmin, bool $remember) {
         $_SESSION['user_id'] = $id;
         $_SESSION['email'] = $email;
         $_SESSION['name'] = $name;
@@ -50,11 +49,6 @@ class User
         return true;
     }
 
-    public function populateView()
-    {
-        $this->view->addVar('logged', $this->logged);
-    }
-
     public function verification()
     {
         if(!$this->logged) {
@@ -66,5 +60,16 @@ class User
     public function hashPassword(string $password) : string
     {
         return password_hash($password, PASSWORD_ARGON2I);
+    }
+
+    protected function populateLoggedInUser()
+    {
+        $this->logged = true;
+        $this->id = $_SESSION['user_id'];
+    }
+
+    protected function populateView()
+    {
+        $this->view->addVar('logged', $this->logged);
     }
 }
