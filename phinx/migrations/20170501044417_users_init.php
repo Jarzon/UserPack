@@ -8,12 +8,12 @@ class UsersInit extends AbstractMigration
     {
         $table = $this->table('users');
         $table
-            ->addColumn('name', 'string', ['limit' => 40])
-            ->addColumn('email', 'string', ['limit' => 50])
-            ->addColumn('password', 'string', ['limit' => 128])
+            ->addColumn('name', 'string', ['limit' => 50])
+            ->addColumn('email', 'string', ['limit' => 80])
+            ->addColumn('password', 'string', ['limit' => 255])
             ->addColumn('status', 'integer', ['default' => '0'])
+            ->addColumn('updated', 'datetime', ['default' => 'CURRENT_TIMESTAMP'])
             ->addColumn('created', 'datetime', ['default' => 'CURRENT_TIMESTAMP'])
-            ->addIndex(['name'], ['unique' => true])
             ->addIndex(['email'], ['unique' => true])
             ->create();
     }
