@@ -32,9 +32,22 @@ return [
             $dic->model('UserPack\UserModel')
         ];
     },
-    Signout::class => $injectionPlusVerification,
-    Settings::class => $injectionPlusVerification,
-    
+    Signout::class => function($dic) {
+        $dic->get('userService')->verification();
+
+        return [
+            $dic->model('UserPack\UserModel')
+        ];
+    },
+    Settings::class => function($dic) {
+        $user = $dic->get('userService');
+        $user->verification();
+
+        return [
+            $user,
+            $dic->model('UserPack\UserModel')
+        ];
+    },
     Admin::class => function($dic) {
         $dic->get('userService')->verification();
 
