@@ -54,6 +54,10 @@ class Signin extends AbstractController
             return false;
         }
 
+        if (password_needs_rehash($infos->password, $this->options['password']['algo'], $this->options['password']['options'])) {
+            $this->userModel->saveSettings(['password' => $this->user->hashPassword($values['password'])], $infos->id);
+        }
+
         return $this->user->signin($infos->id, $infos->email, $infos->name, $infos->status, $values['status'] >= 4, $values['remember']);
     }
 

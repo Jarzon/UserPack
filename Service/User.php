@@ -13,7 +13,15 @@ class User
     public function __construct(View $view, array $options)
     {
         $this->view = $view;
-        $this->options = $options;
+        $this->options = $options += [
+            'url_protocol' => 'http',
+            'password' => [
+                'algo' => PASSWORD_DEFAULT,
+                'options' => [
+                    'cost' => 10
+                ]
+            ]
+        ];
 
         if(session_status() !== PHP_SESSION_ACTIVE && !headers_sent()) {
             session_start();
@@ -52,14 +60,20 @@ class User
     public function verification()
     {
         if(!$this->logged) {
-            header("location: /");
+            header('location: /');
             exit;
         }
     }
 
     public function hashPassword(string $password) : string
     {
-        return password_hash($password, PASSWORD_ARGON2I);
+        $pw = password_hash($password, $this->options['password']['algo'], $this->options['password']['options']);
+
+        if($pw === false || $pw === null) {
+            throw new \Exception('Error while trying to hash password');
+        }
+
+        return $pw;
     }
 
     protected function populateLoggedInUser()
