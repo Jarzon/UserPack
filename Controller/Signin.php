@@ -10,24 +10,24 @@ use UserPack\Service\User;
 class Signin extends AbstractController
 {
     protected $user;
+    protected $userForm;
     protected $userModel;
 
     public function __construct(View $view, array $options,
-                                User $user, UserModel $userModel)
+                                User $user, UserForm $userForm, UserModel $userModel)
     {
         parent::__construct($view, $options);
 
         $this->user = $user;
+        $this->userForm = $userForm;
         $this->userModel = $userModel;
     }
 
     public function index()
     {
-        $form = $this->getForm();
-
-        if ($form->submitted()) {
+        if ($this->userForm->submitted()) {
             try {
-                $values = $form->validation();
+                $values = $this->userForm->validation();
 
                 if($this->submit($values)) {
                     $this->redirection();
@@ -38,28 +38,16 @@ class Signin extends AbstractController
             }
         }
 
-        $this->render('signin', 'UserPack', ['form' => $form]);
-    }
-
-    protected function getForm()
-    {
-        $form = new Form($_POST);
-
-        $form
-            ->text('name')->required()
-            ->password('password')->required()
-            ->checkbox('remember')->value(true)->selected()
-
-            ->submit();
-
-        return $form;
+        $this->render('signin', 'UserPack', [
+            'form' => $this->userForm->getForm()
+        ]);
     }
 
     protected function submit(array $values)
     {
         if (empty($values)) return false;
 
-        $infos = $this->userModel->signin([$values['name']]);
+        $infos = $this->userModel->signin($values['email']);
 
         if (!$infos || !password_verify($values['password'], $infos->password)) {
             $this->message('error', 'wrong password or username');
