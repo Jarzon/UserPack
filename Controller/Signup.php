@@ -35,7 +35,12 @@ class Signup extends AbstractController
             ->setTo([$email => $name])
             ->setBody($message);
 
-        return $mailer->send($body);
+        try {
+            $mailer->send($body);
+        }
+        catch (\Swift_TransportException $e) {
+            // huh
+        }
     }
 
     public function index()
