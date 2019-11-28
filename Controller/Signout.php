@@ -7,7 +7,7 @@ use UserPack\Model\UserModel;
 
 class Signout extends AbstractController
 {
-    protected $userModel;
+    protected UserModel $userModel;
 
     public function __construct(View $view, array $options, UserModel $userModel)
     {

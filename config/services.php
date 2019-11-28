@@ -1,21 +1,22 @@
 <?php
+use \Prim\Container;
 use UserPack\Controller\{Admin, Reset, Settings, Signin, Signout, Signup};
 
 return [
-    Signup::class => function($dic) {
+    Signup::class => function(Container $dic) {
         return [
             $dic->get('userService'),
             $dic->model('UserPack\UserModel')
         ];
     },
-    Signin::class => function($dic) {
+    Signin::class => function(Container $dic) {
         return [
             $dic->get('userService'),
             $dic->form('UserPack\UserForm'),
             $dic->model('UserPack\UserModel')
         ];
     },
-    Reset::class => function($dic) {
+    Reset::class => function(Container $dic) {
         $user = $dic->get('userService');
 
         if(!$user->logged) {
@@ -28,14 +29,14 @@ return [
             $dic->model('UserPack\UserModel')
         ];
     },
-    Signout::class => function($dic) {
+    Signout::class => function(Container $dic) {
         $dic->get('userService')->verification();
 
         return [
             $dic->model('UserPack\UserModel')
         ];
     },
-    Settings::class => function($dic) {
+    Settings::class => function(Container $dic) {
         $user = $dic->get('userService');
         $user->verification();
 
@@ -44,7 +45,7 @@ return [
             $dic->model('UserPack\UserModel')
         ];
     },
-    Admin::class => function($dic) {
+    Admin::class => function(Container $dic) {
         $dic->get('userService')->verification();
 
         if(!$dic->get('adminService')->isAdmin()) {

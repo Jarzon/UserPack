@@ -5,10 +5,10 @@ use Prim\View;
 
 class User
 {
-    public $logged = false;
-    public $id = 0;
-    protected $view;
-    protected $options;
+    public bool $logged = false;
+    public int $id = 0;
+    protected View $view;
+    protected array $options;
 
     public function __construct(View $view, array $options)
     {

@@ -1,7 +1,6 @@
 <?php
 namespace UserPack\Controller;
 
-use Jarzon\Form;
 use Prim\AbstractController;
 use Prim\View;
 use UserPack\Model\UserModel;
@@ -9,9 +8,9 @@ use UserPack\Service\User;
 
 class Signin extends AbstractController
 {
-    protected $user;
-    protected $userForm;
-    protected $userModel;
+    protected User $user;
+    protected UserForm $userForm;
+    protected UserModel $userModel;
 
     public function __construct(View $view, array $options,
                                 User $user, UserForm $userForm, UserModel $userModel)
