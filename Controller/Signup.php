@@ -1,23 +1,23 @@
 <?php
 namespace UserPack\Controller;
 
-use Jarzon\Form;
+use Jarzon\ValidationException;
 use Prim\AbstractController;
 use Prim\View;
-use UserPack\Model\UserModel;
-use UserPack\Service\User;
 
 class Signup extends AbstractController
 {
-    protected User $user;
-    protected UserModel $userModel;
+    protected object $user;
+    protected object $form;
+    protected object $userModel;
 
     public function __construct(View $view, array $options,
-                                User $user, UserModel $userModel)
+                                object $user, object $signUpForm, object $userModel)
     {
         parent::__construct($view, $options);
 
         $this->user = $user;
+        $this->form = $signUpForm;
         $this->userModel = $userModel;
     }
 
@@ -45,36 +45,22 @@ class Signup extends AbstractController
 
     public function index()
     {
-        $form = $this->getForm();
-
-        if ($form->submitted()) {
+        if ($this->form->submitted()) {
             try {
-                $values = $form->validation();
+                $values = $this->form->validation();
 
                 if($this->submit($values)) {
                     $this->redirection();
                 }
             }
-            catch (\Jarzon\ValidationException $e) {
+            catch (ValidationException $e) {
                 $this->message('error', $e->getMessage());
             }
         }
 
-        $this->render('signup', 'UserPack', ['form' => $form]);
-    }
-
-    protected function getForm()
-    {
-        $form = new Form($_POST);
-
-        $form
-            ->email('email')->required()
-            ->text('name')->required()
-            ->password('password')->required()
-
-            ->submit();
-
-        return $form;
+        $this->render('signup', 'UserPack', [
+            'form' => $this->form
+        ]);
     }
 
     protected function submit(array $values = [])

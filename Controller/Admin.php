@@ -3,16 +3,14 @@ namespace UserPack\Controller;
 
 use Prim\AbstractController;
 use Prim\View;
-use UserPack\Model\UserModel;
-use \PrimPack\Service\Admin as AdminService;
 
 class Admin extends AbstractController
 {
-    protected AdminService $admin;
-    protected UserModel $userModel;
+    protected object $admin;
+    protected object $userModel;
 
     public function __construct(View $view, array $options,
-                                UserModel $userModel, AdminService $admin)
+                                object $userModel, object $admin)
     {
         parent::__construct($view, $options);
 

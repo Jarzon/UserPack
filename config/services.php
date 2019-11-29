@@ -6,13 +6,14 @@ return [
     Signup::class => function(Container $dic) {
         return [
             $dic->get('userService'),
+            $dic->form('UserPack\SignUpForm'),
             $dic->model('UserPack\UserModel')
         ];
     },
     Signin::class => function(Container $dic) {
         return [
             $dic->get('userService'),
-            $dic->form('UserPack\UserForm'),
+            $dic->form('UserPack\SignInForm'),
             $dic->model('UserPack\UserModel')
         ];
     },

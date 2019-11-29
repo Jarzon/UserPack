@@ -3,13 +3,12 @@ namespace UserPack\Controller;
 
 use Prim\AbstractController;
 use Prim\View;
-use UserPack\Model\UserModel;
 
 class Signout extends AbstractController
 {
-    protected UserModel $userModel;
+    protected object $userModel;
 
-    public function __construct(View $view, array $options, UserModel $userModel)
+    public function __construct(View $view, array $options, object $userModel)
     {
         parent::__construct($view, $options);
 

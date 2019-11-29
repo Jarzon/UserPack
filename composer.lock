@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dcd5d246eb044064e2c001e4fce66240",
+    "content-hash": "ae225749fa3c6520ce26be12aa1acba0",
     "packages": [
         {
             "name": "cakephp/cache",
@@ -495,16 +495,16 @@
         },
         {
             "name": "jarzon/prim",
-            "version": "v0.16.1",
+            "version": "v0.16.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Jarzon/Prim.git",
-                "reference": "9f8b12d67b6abc9d52507c1aee8351d6dff5bfc7"
+                "reference": "13e914664956ac065934ec493254910cbedaf76d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Jarzon/Prim/zipball/9f8b12d67b6abc9d52507c1aee8351d6dff5bfc7",
-                "reference": "9f8b12d67b6abc9d52507c1aee8351d6dff5bfc7",
+                "url": "https://api.github.com/repos/Jarzon/Prim/zipball/13e914664956ac065934ec493254910cbedaf76d",
+                "reference": "13e914664956ac065934ec493254910cbedaf76d",
                 "shasum": ""
             },
             "require": {
@@ -541,7 +541,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2019-11-28T06:28:01+00:00"
+            "time": "2019-11-28T07:17:03+00:00"
         },
         {
             "name": "nikic/fast-route",

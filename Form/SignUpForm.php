@@ -1,9 +1,9 @@
 <?php
-namespace UserPack\Controller;
+namespace UserPack\Form;
 
 use Jarzon\FormAbstract;
 
-class UserForm extends FormAbstract
+class SignUpForm extends FormAbstract
 {
     public function __construct()
     {
@@ -11,8 +11,8 @@ class UserForm extends FormAbstract
 
         $this->form
             ->email('email')->required()
+            ->text('name')->required()
             ->password('password')->required()
-            ->checkbox('remember')->value(true)->selected()
 
             ->submit();
     }

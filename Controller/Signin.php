@@ -3,17 +3,15 @@ namespace UserPack\Controller;
 
 use Prim\AbstractController;
 use Prim\View;
-use UserPack\Model\UserModel;
-use UserPack\Service\User;
 
 class Signin extends AbstractController
 {
-    protected User $user;
-    protected UserForm $userForm;
-    protected UserModel $userModel;
+    protected object $user;
+    protected object $userForm;
+    protected object $userModel;
 
     public function __construct(View $view, array $options,
-                                User $user, UserForm $userForm, UserModel $userModel)
+                                object $user, object $userForm, object $userModel)
     {
         parent::__construct($view, $options);
 
