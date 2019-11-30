@@ -3,21 +3,23 @@ namespace UserPack\Controller;
 
 use Prim\AbstractController;
 use Prim\View;
+use UserPack\Form\SignInForm;
+use UserPack\Service\User;
 
 class Signin extends AbstractController
 {
-    protected object $user;
-    protected object $userForm;
-    protected object $userModel;
+    protected User $user;
+    protected UserForm $userForm;
+    protected SignInForm $signInForm;
 
     public function __construct(View $view, array $options,
-                                object $user, object $userForm, object $userModel)
+                                User $user, UserForm $userForm, SignInForm $signInForm)
     {
         parent::__construct($view, $options);
 
         $this->user = $user;
         $this->userForm = $userForm;
-        $this->userModel = $userModel;
+        $this->signInForm = $signInForm;
     }
 
     public function index()

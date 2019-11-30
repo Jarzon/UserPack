@@ -4,14 +4,16 @@ namespace UserPack\Controller;
 use Jarzon\Form;
 use Prim\AbstractController;
 use Prim\View;
+use UserPack\Model\UserModel;
+use UserPack\Service\User;
 
 class Settings extends AbstractController
 {
-    protected object $user;
-    protected object $userModel;
+    protected User $user;
+    protected UserModel $userModel;
 
     public function __construct(View $view, array $options,
-                                object $user, object $userModel)
+                                User $user, UserModel $userModel)
     {
         parent::__construct($view, $options);
 

@@ -1,24 +1,24 @@
 <?php
 namespace UserPack\Controller;
 
-use Jarzon\ValidationException;
+use Jarzon\Form;
 use Prim\AbstractController;
 use Prim\View;
+use UserPack\Form\SignUpForm;
+use UserPack\Service\User;
 
 class Signup extends AbstractController
 {
-    protected object $user;
-    protected object $form;
-    protected object $userModel;
+    protected User $user;
+    protected SignUpForm $signUpForm;
 
     public function __construct(View $view, array $options,
-                                object $user, object $signUpForm, object $userModel)
+                                User $user, SignUpForm $signUpForm)
     {
         parent::__construct($view, $options);
 
         $this->user = $user;
-        $this->form = $signUpForm;
-        $this->userModel = $userModel;
+        $this->signUpForm = $signUpForm;
     }
 
     protected function sendEmail(string $email, string $name, string $subject, string $message)
@@ -45,22 +45,36 @@ class Signup extends AbstractController
 
     public function index()
     {
-        if ($this->form->submitted()) {
+        $form = $this->getForm();
+
+        if ($form->submitted()) {
             try {
-                $values = $this->form->validation();
+                $values = $form->validation();
 
                 if($this->submit($values)) {
                     $this->redirection();
                 }
             }
-            catch (ValidationException $e) {
+            catch (\Jarzon\ValidationException $e) {
                 $this->message('error', $e->getMessage());
             }
         }
 
-        $this->render('signup', 'UserPack', [
-            'form' => $this->form
-        ]);
+        $this->render('signup', 'UserPack', ['form' => $form]);
+    }
+
+    protected function getForm()
+    {
+        $form = new Form($_POST);
+
+        $form
+            ->email('email')->required()
+            ->text('name')->required()
+            ->password('password')->required()
+
+            ->submit();
+
+        return $form;
     }
 
     protected function submit(array $values = [])
