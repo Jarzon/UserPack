@@ -24,13 +24,13 @@ class Reset extends AbstractController
 
     protected function sendEmail(string $email, string $name, string $subject, string $message)
     {
-        $transport = \Swift_SmtpTransport::newInstance($this->options['smtp_url'], $this->options['smtp_port'], $this->options['smtp_secure'])
+        $transport = (new \Swift_SmtpTransport($this->options['smtp_url'], $this->options['smtp_port'], $this->options['smtp_secure']))
             ->setUsername($this->options['email'])
             ->setPassword($this->options['smtp_password']);
 
-        $mailer = \Swift_Mailer::newInstance($transport);
+        $mailer = new \Swift_Mailer($transport);
 
-        $body = \Swift_Message::newInstance()
+        $body = (new \Swift_Message())
             ->setSubject($subject)
             ->setFrom([$this->options['email'] => $this->options['email_name']])
             ->setTo([$email => $name])
