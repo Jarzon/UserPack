@@ -9,16 +9,14 @@ use UserPack\Service\User;
 class Signin extends AbstractController
 {
     protected User $user;
-    protected UserForm $userForm;
     protected SignInForm $signInForm;
 
     public function __construct(View $view, array $options,
-                                User $user, UserForm $userForm, SignInForm $signInForm)
+                                User $user, SignInForm $signInForm)
     {
         parent::__construct($view, $options);
 
         $this->user = $user;
-        $this->userForm = $userForm;
         $this->signInForm = $signInForm;
     }
 
