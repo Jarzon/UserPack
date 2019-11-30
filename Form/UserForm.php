@@ -1,5 +1,5 @@
 <?php
-namespace UserPack\Controller;
+namespace UserPack\Form;
 
 use Jarzon\FormAbstract;
 

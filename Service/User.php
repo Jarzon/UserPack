@@ -67,9 +67,7 @@ class User
 
     public function hashPassword(string $password) : string
     {
-        $pw = password_hash($password, $this->options['password']['algo'], $this->options['password']['options']);
-
-        if($pw === false || $pw === null) {
+        if(!$pw = password_hash($password, $this->options['password']['algo'], $this->options['password']['options'])) {
             throw new \Exception('Error while trying to hash password');
         }
 

@@ -50,6 +50,8 @@ class Reset extends AbstractController
 
 
         if ($form->submitted()) {
+            $values = [];
+
             try {
                 $values = $form->validation();
             }

@@ -4,20 +4,23 @@ namespace UserPack\Controller;
 use Prim\AbstractController;
 use Prim\View;
 use UserPack\Form\SignInForm;
+use UserPack\Model\UserModel;
 use UserPack\Service\User;
 
 class Signin extends AbstractController
 {
     protected User $user;
     protected SignInForm $signInForm;
+    protected UserModel $userModel;
 
     public function __construct(View $view, array $options,
-                                User $user, SignInForm $signInForm)
+                                User $user, SignInForm $signInForm, UserModel $userModel)
     {
         parent::__construct($view, $options);
 
         $this->user = $user;
         $this->signInForm = $signInForm;
+        $this->userModel = $userModel;
     }
 
     public function index()
@@ -52,7 +55,7 @@ class Signin extends AbstractController
         }
 
         if (password_needs_rehash($infos->password, $this->options['password']['algo'], $this->options['password']['options'])) {
-            $this->userModel->saveSettings(['password' => $this->user->hashPassword($values['password'])], $infos->id);
+            $this->userModel->updateUser(['password' => $this->user->hashPassword($values['password'])], $infos->id);
         }
 
         return $this->user->signin($infos->id, $infos->email, $infos->name, $infos->status, $values['status'] >= 4, $values['remember']);

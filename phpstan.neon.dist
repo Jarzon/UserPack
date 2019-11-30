@@ -1,0 +1,12 @@
+parameters:
+    level: 5
+    paths:
+        - %currentWorkingDirectory%/
+    excludes_analyse:
+        - %currentWorkingDirectory%/assets/*
+        - %currentWorkingDirectory%/config/*
+        - %currentWorkingDirectory%/phinx/*
+        - %currentWorkingDirectory%/view/*
+        - %currentWorkingDirectory%/Tests/*
+        - %currentWorkingDirectory%/bin/*
+        - %currentWorkingDirectory%/vendor/*
