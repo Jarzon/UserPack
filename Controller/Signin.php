@@ -22,9 +22,9 @@ class Signin extends AbstractController
 
     public function index()
     {
-        if ($this->userForm->submitted()) {
+        if ($this->signInForm->submitted()) {
             try {
-                $values = $this->userForm->validation();
+                $values = $this->signInForm->validation();
 
                 if($this->submit($values)) {
                     $this->redirection();
@@ -36,7 +36,7 @@ class Signin extends AbstractController
         }
 
         $this->render('signin', 'UserPack', [
-            'form' => $this->userForm->getForm()
+            'form' => $this->signInForm->getForm()
         ]);
     }
 

@@ -1,24 +1,26 @@
 <?php
 namespace UserPack\Controller;
 
-use Jarzon\Form;
 use Prim\AbstractController;
 use Prim\View;
 use UserPack\Form\SignUpForm;
+use UserPack\Model\UserModel;
 use UserPack\Service\User;
 
 class Signup extends AbstractController
 {
     protected User $user;
     protected SignUpForm $signUpForm;
+    protected UserModel $userModel;
 
     public function __construct(View $view, array $options,
-                                User $user, SignUpForm $signUpForm)
+                                User $user, SignUpForm $signUpForm, UserModel $userModel)
     {
         parent::__construct($view, $options);
 
         $this->user = $user;
         $this->signUpForm = $signUpForm;
+        $this->userModel = $userModel;
     }
 
     protected function sendEmail(string $email, string $name, string $subject, string $message)
@@ -45,11 +47,9 @@ class Signup extends AbstractController
 
     public function index()
     {
-        $form = $this->getForm();
-
-        if ($form->submitted()) {
+        if ($this->signUpForm->submitted()) {
             try {
-                $values = $form->validation();
+                $values = $this->signUpForm->validation();
 
                 if($this->submit($values)) {
                     $this->redirection();
@@ -60,21 +60,9 @@ class Signup extends AbstractController
             }
         }
 
-        $this->render('signup', 'UserPack', ['form' => $form]);
-    }
-
-    protected function getForm()
-    {
-        $form = new Form($_POST);
-
-        $form
-            ->email('email')->required()
-            ->text('name')->required()
-            ->password('password')->required()
-
-            ->submit();
-
-        return $form;
+        $this->render('signup', 'UserPack', [
+            'form' => $this->signUpForm->getForm()
+        ]);
     }
 
     protected function submit(array $values = [])

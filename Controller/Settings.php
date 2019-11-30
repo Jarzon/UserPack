@@ -10,40 +10,28 @@ use UserPack\Service\User;
 class Settings extends AbstractController
 {
     protected User $user;
+    protected UserForm $userForm;
     protected UserModel $userModel;
 
     public function __construct(View $view, array $options,
-                                User $user, UserModel $userModel)
+                                User $user, UserForm $userForm, UserModel $userModel)
     {
         parent::__construct($view, $options);
 
         $this->user = $user;
+        $this->userForm = $userForm;
         $this->userModel = $userModel;
-    }
-
-    public function getForm($settings) {
-        $form = new Form($_POST);
-
-        $form
-            ->email('mail')
-            ->required()
-
-            ->submit();
-
-        $form->updateValues($settings);
-
-        return $form;
     }
 
     public function index()
     {
         $settings = $this->userModel->getUserSettings();
 
-        $form = $this->getForm($settings);
+        $this->userForm->updateValues($settings);
 
-        if ($form->submitted()) {
+        if ($this->userForm->submitted()) {
             try {
-                $values = $form->validation();
+                $values = $this->userForm->validation();
 
                 if($this->submit($values)) {
                     $this->message('ok', 'the settings have been saved');
@@ -54,7 +42,7 @@ class Settings extends AbstractController
             }
         }
 
-        $this->view(['form' => $form]);
+        $this->view(['form' => $this->userForm->getForms()]);
     }
 
     protected function view(array $vars)
