@@ -9,9 +9,9 @@ use UserPack\Service\User;
 
 class Settings extends AbstractController
 {
-    protected User $user;
-    protected UserForm $userForm;
-    protected UserModel $userModel;
+    private User $user;
+    private UserForm $userForm;
+    private UserModel $userModel;
 
     public function __construct(View $view, array $options,
                                 User $user, UserForm $userForm, UserModel $userModel)

@@ -8,8 +8,8 @@ use \PrimPack\Service\Admin as AdminService;
 
 class Admin extends AbstractController
 {
-    protected AdminService $admin;
-    protected UserModel $userModel;
+    private AdminService $admin;
+    private UserModel $userModel;
 
     public function __construct(View $view, array $options,
                                 UserModel $userModel, AdminService $admin)
