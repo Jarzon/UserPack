@@ -5,12 +5,10 @@ use Jarzon\FormAbstract;
 
 class UserForm extends FormAbstract
 {
-    public function __construct()
+    public function build()
     {
-        parent::__construct();
-
         $this->form
-            ->email('mail')
+            ->email('email')
             ->required()
 
             ->submit();
