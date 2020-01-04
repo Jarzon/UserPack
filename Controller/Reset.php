@@ -10,12 +10,17 @@ use UserPack\Service\User;
 
 class Reset extends AbstractController
 {
-    private User $user;
-    private UserModel $userModel;
+    protected User $user;
+    protected UserModel $userModel;
 
     public function __construct(View $view, array $options,
                                 User $user, UserModel $userModel)
     {
+        $options += [
+            'userpack_pwmin' => 6,
+            'userpack_pwmax' => 250
+        ];
+
         parent::__construct($view, $options);
 
         $this->user = $user;
@@ -96,8 +101,8 @@ class Reset extends AbstractController
         $form = new Form($_POST);
 
         $form
-            ->password('password1')->required()
-            ->password('password2')->required()
+            ->password('password1')->min($this->options['userpack_pwmin'])->max($this->options['userpack_pwmax'])->required()
+            ->password('password2')->min($this->options['userpack_pwmin'])->max($this->options['userpack_pwmax'])->required()
 
             ->submit();
 
