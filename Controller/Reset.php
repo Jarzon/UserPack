@@ -10,8 +10,8 @@ use UserPack\Service\User;
 
 class Reset extends AbstractController
 {
-    protected User $user;
-    protected UserModel $userModel;
+    private User $user;
+    private UserModel $userModel;
 
     public function __construct(View $view, array $options,
                                 User $user, UserModel $userModel)
