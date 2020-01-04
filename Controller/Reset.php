@@ -27,6 +27,31 @@ class Reset extends AbstractController
         $this->userModel = $userModel;
     }
 
+    protected function getEmailForm()
+    {
+        $form = new Form($_POST);
+
+        $form
+            ->email('email')->required()
+
+            ->submit();
+
+        return $form;
+    }
+
+    protected function getPasswordForm()
+    {
+        $form = new Form($_POST);
+
+        $form
+            ->password('password1')->min($this->options['userpack_pwmin'])->max($this->options['userpack_pwmax'])->required()
+            ->password('password2')->min($this->options['userpack_pwmin'])->max($this->options['userpack_pwmax'])->required()
+
+            ->submit();
+
+        return $form;
+    }
+
     protected function sendEmail(string $email, string $name, string $subject, string $message)
     {
         $transport = (new \Swift_SmtpTransport($this->options['smtp_url'], $this->options['smtp_port'], $this->options['smtp_secure']))
@@ -46,13 +71,7 @@ class Reset extends AbstractController
 
     public function index()
     {
-        $form = new Form($_POST);
-
-        $form
-            ->email('email')->required()
-
-            ->submit();
-
+        $form = $this->getEmailForm();
 
         if ($form->submitted()) {
             $values = [];
@@ -98,14 +117,7 @@ class Reset extends AbstractController
 
         $user = $this->userModel->getUserByEmail($email);
 
-        $form = new Form($_POST);
-
-        $form
-            ->password('password1')->min($this->options['userpack_pwmin'])->max($this->options['userpack_pwmax'])->required()
-            ->password('password2')->min($this->options['userpack_pwmin'])->max($this->options['userpack_pwmax'])->required()
-
-            ->submit();
-
+        $form = $this->getPasswordForm();
 
         if ($form->submitted()) {
             try {
