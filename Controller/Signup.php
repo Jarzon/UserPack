@@ -69,7 +69,7 @@ class Signup extends AbstractController
     {
         if(empty($values)) return false;
 
-        if($this->userModel->exists($values['email'], $values['name'])) {
+        if($this->userModel->exists($values['email'])) {
             $this->message('error', 'that email/name is already used by another account');
             return false;
         }

@@ -3,15 +3,15 @@ namespace UserPack\Model;
 
 class UserModel extends \Prim\Model
 {
-    public function exists(string $email, string $name) : bool
+    public function exists(string $email) : bool
     {
         $query = $this->prepare("
             SELECT id
             FROM users
-            WHERE email = ? OR name = ?
+            WHERE email = ?
             LIMIT 1");
 
-        $query->execute([$email, $name]);
+        $query->execute([$email]);
 
         return ($query->fetch())? true: false;
     }
@@ -38,19 +38,6 @@ class UserModel extends \Prim\Model
         $query->execute([$email]);
 
         return $query->fetch();
-    }
-
-    public function getUserByName(string $name)
-    {
-        $query = $this->prepare("
-            SELECT id
-            FROM users
-            WHERE name = ?
-            LIMIT 1");
-
-        $query->execute([$name]);
-
-        return $this->getUser($query->fetch()->id);
     }
 
     public function getUserByEmail(string $email)
