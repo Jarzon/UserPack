@@ -4,15 +4,14 @@ namespace UserPack\Controller;
 use Prim\AbstractController;
 use Prim\View;
 use UserPack\Model\UserModel;
-use \PrimPack\Service\Admin as AdminService;
 
 class Admin extends AbstractController
 {
-    private AdminService $admin;
+    private object $admin;
     private UserModel $userModel;
 
     public function __construct(View $view, array $options,
-                                UserModel $userModel, AdminService $admin)
+                                UserModel $userModel, object $admin)
     {
         parent::__construct($view, $options);
 
@@ -24,7 +23,7 @@ class Admin extends AbstractController
     {
         if (isset($_POST['submit_add_user'])) {
 
-            $this->userModel->addUser($_POST['name']);
+            $this->userModel->signUp([$_POST['name']]);
         }
 
         $this->render('admin/list', 'UserPack', [

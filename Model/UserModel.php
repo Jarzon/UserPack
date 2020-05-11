@@ -1,8 +1,12 @@
 <?php
 namespace UserPack\Model;
 
+use UserPack\Service\User;
+
 class UserModel extends \Prim\Model
 {
+    private User $user;
+
     public function exists(string $email) : bool
     {
         $query = $this->prepare("
