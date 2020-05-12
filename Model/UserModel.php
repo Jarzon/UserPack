@@ -7,6 +7,13 @@ class UserModel extends \Prim\Model
 {
     private User $user;
 
+    public function __construct($db, array $options = [], $user)
+    {
+        parent::__construct($db, $options);
+
+        $this->user = $user;
+    }
+
     public function exists(string $email) : bool
     {
         $query = $this->prepare("
