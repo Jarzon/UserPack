@@ -1,6 +1,4 @@
 {
-  "languages": ["en", "fr"],
-
   "sign up": ["Sign up", "Inscription"],
   "sign in": ["Sign in", "Connexion"],
   "sign out": ["Sign out", "Déconnexion"],
