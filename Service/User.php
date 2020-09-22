@@ -36,14 +36,14 @@ class User
         $this->populateView();
     }
 
-    public function signin(int $id, string $email, string $name, int $status, bool $isAdmin, bool $remember) {
-        $_SESSION['user_id'] = $id;
-        $_SESSION['email'] = $email;
-        $_SESSION['name'] = $name;
-        $_SESSION['isAdmin'] = $isAdmin;
-        $_SESSION['status'] = $status;
+    public function signin(array $values) {
+        $_SESSION['user_id'] = $values['id'];
+        $_SESSION['email'] = $values['email'];
+        $_SESSION['name'] = $values['name'] ?? $values['email'];
+        $_SESSION['isAdmin'] = $values['isAdmin'] ?? false;
+        $_SESSION['status'] = $values['status'] ?? 0;
 
-        if ($remember) {
+        if (isset($values['remember']) && $values['remember']) {
             $params = session_get_cookie_params();
             setcookie(
                 session_name(),

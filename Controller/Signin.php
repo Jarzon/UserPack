@@ -58,7 +58,13 @@ class Signin extends AbstractController
             $this->userModel->updateUser(['password' => $this->user->hashPassword($values['password'])], $infos->id);
         }
 
-        return $this->user->signin($infos->id, $infos->email, $infos->name, $infos->status, $values['status'] >= 4, $values['remember']);
+        $values['id'] = $infos->id;
+        $values['email'] = $infos->email;
+        $values['name'] = $infos->name;
+        $values['status'] = $infos->status;
+        $values['isAdmin'] = $infos->status >= 99;
+
+        return $this->user->signin($values);
     }
 
     protected function redirection() {

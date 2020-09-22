@@ -7,7 +7,7 @@
   "users": ["Users", "Utilisateurs"],
   "name": ["Name", "Nom"],
   "password": ["Password", "Mot de passe"],
-  "wrong username or password": ["Wrong username or password", "Mauvais nom d'utilisateur ou mot de passe"],
+  "wrong password or username": ["Wrong username or password", "Mauvais nom d'utilisateur ou mot de passe"],
   "remember me": ["Keep me signed in", "Rester connecté"],
 
   "request reset password": ["Reset password request", "Demande réinitialisation de mot de passe"],

@@ -78,9 +78,11 @@ class Signup extends AbstractController
 
         $id = $this->userModel->signup($values);
 
+        $values['id'] = $id;
+
         $this->welcomeEmail($values);
 
-        return $this->user->signin($id, $values['email'], $values['name'] ?? '', 0, false, false);
+        return $this->user->signin($values);
     }
 
     protected function welcomeEmail(array $user)
