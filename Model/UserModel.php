@@ -1,6 +1,9 @@
 <?php
 namespace UserPack\Model;
 
+use Jarzon\QueryBuilder\Builder as QB;
+
+use UserPack\Entity\UserEntity;
 use UserPack\Service\User;
 
 class UserModel extends \Prim\Model
@@ -14,22 +17,49 @@ class UserModel extends \Prim\Model
         $this->user = $user;
     }
 
-    public function exists(string $email) : bool
+    public function getUserByEmail(string $email)
     {
-        $query = $this->prepare("
-            SELECT id
-            FROM users
-            WHERE email = ?
-            LIMIT 1");
+        $u = new UserEntity();
 
-        $query->execute([$email]);
+        $query = QB::select($u)
+            ->columns($u->id, $u->name, $u->email, $u->password, $u->status, $u->reset)
+            ->where($u->email, '=', $email)
+            ->limit(1);
 
-        return ($query->fetch())? true: false;
+        return $query->fetch();
     }
 
-    public function canResetPassword(string $email, string $token)
+    public function getUser(int $user_id)
     {
-        if($user = $this->getUserResetByEmail($email)) {
+        $u = new UserEntity();
+
+        $query = QB::select($u)
+            ->columns()
+            ->where($u->id, '=', $user_id)
+            ->limit(1);
+
+        return $query->fetch();
+    }
+
+    public function getUserSettings(?int $user_id = null)
+    {
+        $u = new UserEntity();
+
+        $query = QB::select($u)
+            ->columns($u->email)
+            ->where($u->id, '=', $user_id);
+
+        return $query->fetch();
+    }
+
+    public function exists(string $email) : bool
+    {
+        return !empty($this->getUserByEmail($email))? true: false;
+    }
+
+    public function canResetPassword(string $email, string $token): bool
+    {
+        if($user = $this->getUserByEmail($email)) {
             if($user->reset === $token) {
                 return true;
             }
@@ -38,100 +68,66 @@ class UserModel extends \Prim\Model
         return false;
     }
 
-    public function getUserResetByEmail(string $email)
+    public function signUp(array $post)
     {
-        $query = $this->prepare("
-            SELECT id, reset
-            FROM users
-            WHERE email = ?
-            LIMIT 1");
+        $u = new UserEntity();
 
-        $query->execute([$email]);
+        $query = QB::insert($u)
+            ->columns($post);
 
-        return $query->fetch();
+        return $query->exec();
     }
 
-    public function getUserByEmail(string $email)
+    public function signIn(string $email): object
     {
-        $query = $this->prepare("
-            SELECT id
-            FROM users
-            WHERE email = ?
-            LIMIT 1");
-
-        $query->execute([$email]);
-
-        if(!$user = $query->fetch()) {
-            return false;
-        }
-
-        return $this->getUser($user->id);
+        return $this->getUserByEmail($email);
     }
-
-    public function signUp(array $params)
-    {
-        return $this->insert('users', $params);
-    }
-
-    public function signIn(string $email)
-    {
-        $query = $this->prepare("
-            SELECT id, name, email, password, status
-            FROM users
-            WHERE email = ?");
-
-        $query->execute([$email]);
-
-        return $query->fetch()->id;
-    }
-
 
     public function getAllUsers()
     {
-        $query = $this->prepare("
-            SELECT id, name
-            FROM users
-            ORDER BY id DESC");
-        $query->execute();
+        $u = new UserEntity();
+
+        $query = QB::select($u)
+            ->columns($u->id, $u->name)
+            ->orderBy($u->id);
 
         return $query->fetchAll();
     }
 
     public function deleteUser(int $user_id)
     {
-        $query = $this->prepare("DELETE FROM users WHERE id = ?");
-
-        $query->execute([$user_id]);
+        return $this->updateUser(['status' => -1]);
     }
 
-    public function getUser(int $user_id)
+    public function updateUser(array $post, ?int $user_id = null)
     {
-        $query = $this->prepare("SELECT * FROM users WHERE id = ? LIMIT 1");
+        $u = new UserEntity();
 
-        $query->execute([$user_id]);
+        $query = QB::update($u)
+            ->columns($post)
+            ->where($u->id, '=', $user_id ?? $this->user->id);
 
-        return $query->fetch();
+        return $query->exec();
     }
 
-    public function updateUser(array $post, ?int $user_id)
+    public function setConnectionTime(?int $user_id = null)
     {
-        $this->update('users', $post, 'id = ?', [$user_id ?? $this->user->id]);
+        $u = new UserEntity();
+
+        $query = QB::update($u)
+            ->setRaw($u->updated, 'NOW()')
+            ->where($u->id, '=', $user_id ?? $this->user->id);
+
+        return $query->exec();
     }
 
-    public function getAmountOfUsers()
+    public function getNumberOfUsers()
     {
-        $query = $this->prepare("SELECT COUNT(id) AS amount_of_users FROM users");
-        $query->execute();
+        $u = new UserEntity();
 
-        return $query->fetch()->amount_of_users;
-    }
+        $query = QB::select($u)
+            ->columns($u->id->count());
 
-    public function getUserSettings()
-    {
-        $query = $this->prepare("SELECT email FROM users WHERE id = ? LIMIT 1");
-
-        $query->execute([$this->user->id]);
-
-        return $query->fetch();
+        return $query->fetchColumn();
     }
 }
