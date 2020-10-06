@@ -33,7 +33,7 @@ class UserModel extends \Prim\Model
         $u = new UserEntity();
 
         $query = QB::select($u)
-            ->columns()
+            ->columns('*')
             ->where($u->id, '=', $user_id)
             ->limit(1);
 
