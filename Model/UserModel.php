@@ -4,11 +4,10 @@ namespace UserPack\Model;
 use Jarzon\QueryBuilder\Builder as QB;
 
 use UserPack\Entity\UserEntity;
-use UserPack\Service\User;
 
 class UserModel extends \Prim\Model
 {
-    private User $user;
+    private $user;
 
     public function __construct($db, array $options = [], $user)
     {
