@@ -21,11 +21,6 @@ class Admin extends AbstractController
 
     public function list(int $page = 1)
     {
-        if (isset($_POST['submit_add_user'])) {
-
-            $this->userModel->signUp([$_POST['name']]);
-        }
-
         $this->render('admin/list', 'UserPack', [
             'users' => $this->userModel->getAllUsers()
         ]);
