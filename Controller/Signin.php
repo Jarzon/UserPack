@@ -47,9 +47,9 @@ class Signin extends AbstractController
     {
         if (empty($values)) return false;
 
-        $infos = $this->userModel->signin($values['email']);
+        $infos = $this->userModel->getUserByEmail($values['email']);
 
-        if (!empty($infos) || !password_verify($values['password'], $infos->password)) {
+        if (isset($infos) || !password_verify($values['password'], $infos->password)) {
             $this->message('error', 'wrong password or username');
             return false;
         }

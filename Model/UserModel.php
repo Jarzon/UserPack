@@ -16,7 +16,7 @@ class UserModel extends \Prim\Model
         $this->user = $user;
     }
 
-    public function getUserByEmail(string $email)
+    public function getUserByEmail(string $email): ?object
     {
         $u = new UserEntity();
 
@@ -25,7 +25,7 @@ class UserModel extends \Prim\Model
             ->where($u->email, '=', $email)
             ->limit(1);
 
-        return $query->fetch();
+        return $query->fetch() ?? null;
     }
 
     public function getUser(int $user_id)
@@ -51,7 +51,7 @@ class UserModel extends \Prim\Model
         return $query->fetch();
     }
 
-    public function exists(string $email) : bool
+    public function exists(string $email): bool
     {
         return !empty($this->getUserByEmail($email))? true: false;
     }
@@ -75,11 +75,6 @@ class UserModel extends \Prim\Model
             ->columns($post);
 
         return $query->exec();
-    }
-
-    public function signIn(string $email): object
-    {
-        return $this->getUserByEmail($email);
     }
 
     public function getAllUsers()
