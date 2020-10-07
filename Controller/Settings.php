@@ -14,13 +14,13 @@ class Settings extends AbstractController
     private UserModel $userModel;
 
     public function __construct(View $view, array $options,
-                                User $user, UserForm $userForm, UserModel $userModel)
+                                User $user = null, UserForm $userForm = null, UserModel $userModel = null)
     {
         parent::__construct($view, $options);
 
-        $this->user = $user;
-        $this->userForm = $userForm;
-        $this->userModel = $userModel;
+        if($user) $this->user = $user;
+        if($userForm) $this->userForm = $userForm;
+        if($userModel) $this->userModel = $userModel;
     }
 
     public function index()
@@ -42,7 +42,7 @@ class Settings extends AbstractController
             }
         }
 
-        $this->view(['form' => $this->userForm->getForms()]);
+        $this->view(['form' => $this->userForm->getForm()]);
     }
 
     protected function view(array $vars)
