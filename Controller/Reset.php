@@ -93,7 +93,9 @@ class Reset extends AbstractController
                 try {
                     $message = $this->view->fetch('email/reset', 'UserPack', ['user' => $user, 'reset' => $reset]);
 
-                    $this->sendEmail($user->email, $user->name, "{$this->options['project_name']} - Password reset", $message);
+                    if($this->options['environment'] === 'prod') {
+                        $this->sendEmail($user->email, $user->name, "{$this->options['project_name']} - Password reset", $message);
+                    }
                 } catch(\Exception $e) {
                     $this->message('alert', 'Something went wrong, we couldn\'t send the email.');
                 }

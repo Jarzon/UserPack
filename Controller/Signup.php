@@ -80,7 +80,9 @@ class Signup extends AbstractController
 
         $values['id'] = $id;
 
-        $this->welcomeEmail($values);
+        if($this->options['environment'] === 'prod') {
+            $this->welcomeEmail($values);
+        }
 
         return $this->user->signin($values);
     }
