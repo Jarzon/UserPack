@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ee3b577f52d1aeaa39b2dfba04b60728",
+    "content-hash": "e43e4adcab5ad69e15c2ddce622ef2e0",
     "packages": [
         {
             "name": "cakephp/core",
@@ -428,16 +428,16 @@
         },
         {
             "name": "jarzon/querybuilder",
-            "version": "v0.5.17",
+            "version": "v0.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Jarzon/QueryBuilder.git",
-                "reference": "5b129248002394363455eb1a0e4b31d1672bdb53"
+                "reference": "daff3b32999096068e269464b4ebfb2d7594f047"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Jarzon/QueryBuilder/zipball/5b129248002394363455eb1a0e4b31d1672bdb53",
-                "reference": "5b129248002394363455eb1a0e4b31d1672bdb53",
+                "url": "https://api.github.com/repos/Jarzon/QueryBuilder/zipball/daff3b32999096068e269464b4ebfb2d7594f047",
+                "reference": "daff3b32999096068e269464b4ebfb2d7594f047",
                 "shasum": ""
             },
             "require": {
@@ -455,7 +455,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "description": "A Query Builder",
-            "time": "2020-06-23T21:31:54+00:00"
+            "time": "2020-07-31T02:28:47+00:00"
         },
         {
             "name": "nikic/fast-route",
