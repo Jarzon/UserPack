@@ -25,7 +25,9 @@ class UserModel extends \Prim\Model
             ->where($u->email, '=', $email)
             ->limit(1);
 
-        return $query->fetch() ?? null;
+        $data = $query->fetch();
+
+        return $data ?: null;
     }
 
     public function getUser(int $user_id)
