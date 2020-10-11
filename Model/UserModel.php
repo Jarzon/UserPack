@@ -9,7 +9,7 @@ class UserModel extends \Prim\Model
 {
     private $user;
 
-    public function __construct($db, array $options = [], $user)
+    public function __construct($db, array $options, $user)
     {
         parent::__construct($db, $options);
 
