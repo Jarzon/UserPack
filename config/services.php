@@ -34,6 +34,7 @@ return [
         $dic->get('userService')->verification();
 
         return [
+            $dic->get('userService'),
             $dic->model('UserPack\UserModel')
         ];
     },
