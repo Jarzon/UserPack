@@ -8,17 +8,19 @@ use UserPack\Entity\UserEntity;
 class UserModel extends \Prim\Model
 {
     private $user;
+    private UserEntity $userEntity;
 
-    public function __construct($db, array $options, $user)
+    public function __construct($db, array $options, $user, $userEntity)
     {
         parent::__construct($db, $options);
 
         $this->user = $user;
+        $this->userEntity = $userEntity;
     }
 
     public function getUserByEmail(string $email): ?object
     {
-        $u = new UserEntity();
+        $u = $this->userEntity;
 
         $query = QB::select($u)
             ->columns($u->id, $u->name, $u->email, $u->password, $u->status, $u->reset)
@@ -32,7 +34,7 @@ class UserModel extends \Prim\Model
 
     public function getUser(int $user_id)
     {
-        $u = new UserEntity();
+        $u = $this->userEntity;
 
         $query = QB::select($u)
             ->columns('*')
@@ -44,7 +46,7 @@ class UserModel extends \Prim\Model
 
     public function getUserSettings(?int $user_id = null)
     {
-        $u = new UserEntity();
+        $u = $this->userEntity;
 
         $query = QB::select($u)
             ->columns($u->email)
@@ -71,7 +73,7 @@ class UserModel extends \Prim\Model
 
     public function signUp(array $post)
     {
-        $u = new UserEntity();
+        $u = $this->userEntity;
 
         $query = QB::insert($u)
             ->columns($post);
@@ -81,7 +83,7 @@ class UserModel extends \Prim\Model
 
     public function getAllUsers()
     {
-        $u = new UserEntity();
+        $u = $this->userEntity;
 
         $query = QB::select($u)
             ->columns($u->id, $u->name)
@@ -97,7 +99,7 @@ class UserModel extends \Prim\Model
 
     public function updateUser(array $post, ?int $user_id = null)
     {
-        $u = new UserEntity();
+        $u = $this->userEntity;
 
         $query = QB::update($u)
             ->columns($post)
@@ -108,7 +110,7 @@ class UserModel extends \Prim\Model
 
     public function setConnectionTime(?int $user_id = null)
     {
-        $u = new UserEntity();
+        $u = $this->userEntity;
 
         $query = QB::update($u)
             ->setRaw($u->updated, 'NOW()')
@@ -119,7 +121,7 @@ class UserModel extends \Prim\Model
 
     public function getNumberOfUsers()
     {
-        $u = new UserEntity();
+        $u = $this->userEntity;
 
         $query = QB::select($u)
             ->columns($u->id->count());
