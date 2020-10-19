@@ -8,7 +8,7 @@ use UserPack\Entity\UserEntity;
 class UserModel extends \Prim\Model
 {
     private $user;
-    private UserEntity $userEntity;
+    private $userEntity;
 
     public function __construct($db, array $options, $user, $userEntity)
     {
