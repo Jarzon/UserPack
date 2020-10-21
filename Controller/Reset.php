@@ -94,13 +94,13 @@ class Reset extends AbstractController
                     $message = $this->view->fetch('email/reset', 'UserPack', ['user' => $user, 'reset' => $reset]);
 
                     if($this->options['environment'] === 'prod') {
-                        $this->sendEmail($user->email, $user->name, "{$this->options['project_name']} - Password reset", $message);
+                        $this->sendEmail($user->email, $user->name, "{$this->options['project_name']} - Demande de réinitialisation du mot de passe", $message);
                     }
                 } catch(\Exception $e) {
-                    $this->message('alert', 'Something went wrong, we couldn\'t send the email.');
+                    $this->message('alert', 'password reset email error');
                 }
             } else {
-                $this->message('error', 'We don\'t have that email/username');
+                $this->message('error', 'email doesnt exist');
             }
         }
 
@@ -126,7 +126,7 @@ class Reset extends AbstractController
                 $values = $form->validation();
 
                 if($values['password1'] !== $values['password2']) {
-                    throw new ValidationException('The two passwords doesn\'t match.');
+                    throw new ValidationException('password missmatch');
                 }
 
                 $this->userModel->updateUser([
@@ -134,7 +134,7 @@ class Reset extends AbstractController
                     'reset' => ''
                 ], $user->id);
 
-                $this->message('ok', 'Your password have been changed.');
+                $this->message('ok', 'password changed');
             }
             catch (ValidationException $e) {
                 $this->message('error', $e->getMessage());

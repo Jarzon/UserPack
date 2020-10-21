@@ -9,12 +9,24 @@
   "password": ["Password", "Mot de passe"],
   "wrong password or username": ["Wrong username or password", "Mauvais nom d'utilisateur ou mot de passe"],
   "remember me": ["Keep me signed in", "Rester connecté"],
+  "reenter password": ["Reenter password", "Retaper le mot de passe"],
+  "set new password": ["Set new password", "Définir le nouveau mot de passe"],
+  "password reset email error": [
+    "Something went wrong, we couldn't send you the email.",
+    "Il y a u un problème, nous n'avons pas pu vous envoyer l'email."
+  ],
 
   "request reset password": ["Reset password request", "Demande réinitialisation de mot de passe"],
+  "password missmatch": ["The passwords doesn't match.", "Les mots de pass ne correspondent pas"],
+  "password changed": ["Your password have been changed.", "Votre mot de passe a été changé"],
+  "email doesnt exist": ["We don't have that email", "Nous n'avons pas cette addresse email"],
 
   "forgot password": ["Forgot password?", "Mot de passe oublié"],
   "no account?": ["You don't have an account?", "Vous n'avez pas de compte ?"],
 
-  "We have sent an email to reset your password at your email address.": ["We have sent an email to reset your password at your email address.", "Nous avons envoyé un email pour réinitialisé votre mot de passe à votre address email."],
-  "We don't have that email/username": ["We don't have that email in our database.", "Nous n'avons pas cette email dans notre base de données."]
+  "We have sent an email to reset your password at your email address.": [
+    "We have sent an email to reset your password at your email address.",
+    "Nous avons envoyé un email pour réinitialisé votre mot de passe à votre address email."
+  ],
+  "We don't have that email/username": ["We don't have that email in our database.", "Nous n'avons pas cette email dans notre base de données."],
 }
