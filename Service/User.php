@@ -6,6 +6,7 @@ use Prim\View;
 class User
 {
     public bool $logged = false;
+    public bool $isAdmin = false;
     public int $id = 0;
     protected View $view;
     protected array $options;
@@ -14,7 +15,7 @@ class User
     {
         $this->view = $view;
         $this->options = $options += [
-            'url_protocol' => 'http',
+            'url_protocol' => 'https://',
             'password' => [
                 'algo' => PASSWORD_DEFAULT,
                 'options' => [
@@ -74,9 +75,9 @@ class User
         session_destroy();
     }
 
-    public function verification()
+    public function verification(bool $isAdminVerification = false)
     {
-        if(!$this->logged) {
+        if(!$this->logged || ($isAdminVerification && !$this->isAdmin)) {
             header('location: /');
             exit;
         }
@@ -94,6 +95,7 @@ class User
     protected function populateLoggedInUser()
     {
         $this->logged = true;
+        $this->isAdmin = $_SESSION['isAdmin'];
         $this->id = $_SESSION['user_id'];
     }
 
