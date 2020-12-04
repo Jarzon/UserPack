@@ -7,16 +7,14 @@ use UserPack\Model\UserModel;
 
 class Admin extends AbstractController
 {
-    private object $admin;
     private UserModel $userModel;
 
     public function __construct(View $view, array $options,
-                                UserModel $userModel, object $admin)
+                                UserModel $userModel)
     {
         parent::__construct($view, $options);
 
         $this->userModel = $userModel;
-        $this->admin = $admin;
     }
 
     public function list(int $page = 1)
