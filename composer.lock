@@ -8,7 +8,7 @@
     "packages": [
         {
             "name": "cakephp/core",
-            "version": "4.2.0",
+            "version": "4.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/core.git",
@@ -65,7 +65,7 @@
         },
         {
             "name": "cakephp/database",
-            "version": "4.2.0",
+            "version": "4.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/database.git",
@@ -120,7 +120,7 @@
         },
         {
             "name": "cakephp/datasource",
-            "version": "4.2.0",
+            "version": "4.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/datasource.git",
@@ -178,7 +178,7 @@
         },
         {
             "name": "cakephp/utility",
-            "version": "4.2.0",
+            "version": "4.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/utility.git",
@@ -475,16 +475,16 @@
         },
         {
             "name": "jarzon/querybuilder",
-            "version": "v0.7.0",
+            "version": "v0.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Jarzon/QueryBuilder.git",
-                "reference": "9d67d3a5aaee730a3907eaaa7d0f5b781620470a"
+                "reference": "d4cc6371d612eae54d0faff0e103d09a5b60188d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Jarzon/QueryBuilder/zipball/9d67d3a5aaee730a3907eaaa7d0f5b781620470a",
-                "reference": "9d67d3a5aaee730a3907eaaa7d0f5b781620470a",
+                "url": "https://api.github.com/repos/Jarzon/QueryBuilder/zipball/d4cc6371d612eae54d0faff0e103d09a5b60188d",
+                "reference": "d4cc6371d612eae54d0faff0e103d09a5b60188d",
                 "shasum": ""
             },
             "require": {
@@ -504,9 +504,9 @@
             "description": "A Query Builder",
             "support": {
                 "issues": "https://github.com/Jarzon/QueryBuilder/issues",
-                "source": "https://github.com/Jarzon/QueryBuilder/tree/v0.7.0"
+                "source": "https://github.com/Jarzon/QueryBuilder/tree/v0.7.2"
             },
-            "time": "2020-12-10T20:39:47+00:00"
+            "time": "2020-12-28T23:34:19+00:00"
         },
         {
             "name": "nikic/fast-route",
