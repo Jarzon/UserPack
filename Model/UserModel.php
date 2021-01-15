@@ -71,7 +71,7 @@ class UserModel extends \Prim\Model
         return false;
     }
 
-    public function signUp(array $post): object|false
+    public function signUp(array $post): int
     {
         $u = $this->userEntity;
 
