@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace UserPack\Model;
 
 use Jarzon\QueryBuilder\Builder as QB;
@@ -32,7 +32,7 @@ class UserModel extends \Prim\Model
         return $data ?: null;
     }
 
-    public function getUser(int $user_id)
+    public function getUser(int $user_id): object|false
     {
         $u = $this->userEntity;
 
@@ -44,7 +44,7 @@ class UserModel extends \Prim\Model
         return $query->fetch();
     }
 
-    public function getUserSettings(?int $user_id = null)
+    public function getUserSettings(?int $user_id = null): object|false
     {
         $u = $this->userEntity;
 
@@ -57,7 +57,7 @@ class UserModel extends \Prim\Model
 
     public function exists(string $email): bool
     {
-        return !empty($this->getUserByEmail($email))? true: false;
+        return !empty($this->getUserByEmail($email));
     }
 
     public function canResetPassword(string $email, string $token): bool
@@ -71,7 +71,7 @@ class UserModel extends \Prim\Model
         return false;
     }
 
-    public function signUp(array $post)
+    public function signUp(array $post): object|false
     {
         $u = $this->userEntity;
 
@@ -81,7 +81,7 @@ class UserModel extends \Prim\Model
         return $query->exec();
     }
 
-    public function getAllUsers()
+    public function getAllUsers(): array|false
     {
         $u = $this->userEntity;
 
@@ -92,12 +92,12 @@ class UserModel extends \Prim\Model
         return $query->fetchAll();
     }
 
-    public function deleteUser(int $user_id)
+    public function deleteUser(int $user_id): int|false
     {
         return $this->updateUser(['status' => -1]);
     }
 
-    public function updateUser(array $post, ?int $user_id = null)
+    public function updateUser(array $post, ?int $user_id = null): int|false
     {
         $u = $this->userEntity;
 
@@ -108,7 +108,7 @@ class UserModel extends \Prim\Model
         return $query->exec();
     }
 
-    public function setConnectionTime(?int $user_id = null)
+    public function setConnectionTime(?int $user_id = null): int|false
     {
         $u = $this->userEntity;
 
@@ -119,7 +119,7 @@ class UserModel extends \Prim\Model
         return $query->exec();
     }
 
-    public function getNumberOfUsers()
+    public function getNumberOfUsers(): int|false
     {
         $u = $this->userEntity;
 

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace UserPack\Controller;
 
 use Prim\AbstractController;
@@ -23,7 +23,7 @@ class Signin extends AbstractController
         $this->userModel = $userModel;
     }
 
-    public function index()
+    public function index(): void
     {
         if ($this->signInForm->submitted()) {
             try {
@@ -43,7 +43,7 @@ class Signin extends AbstractController
         ]);
     }
 
-    protected function submit(array $values)
+    protected function submit(array $values): bool
     {
         if (empty($values)) return false;
 
@@ -67,7 +67,8 @@ class Signin extends AbstractController
         return $this->user->signin($values);
     }
 
-    protected function redirection() {
+    protected function redirection(): void
+    {
         $this->redirect('/');
     }
 }

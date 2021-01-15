@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace UserPack\Controller;
 
 use Prim\AbstractController;
@@ -23,7 +23,7 @@ class Settings extends AbstractController
         if($userModel) $this->userModel = $userModel;
     }
 
-    public function index()
+    public function index(): void
     {
         $settings = $this->userModel->getUserSettings();
 
@@ -45,7 +45,7 @@ class Settings extends AbstractController
         $this->view(['form' => $this->userForm->getForm()]);
     }
 
-    protected function view(array $vars)
+    protected function view(array $vars): void
     {
         $this->render('settings', 'UserPack', $vars);
     }

@@ -25,7 +25,8 @@ class User
         ];
     }
 
-    public function init() {
+    public function init(): void
+    {
         if(session_status() !== PHP_SESSION_ACTIVE && !headers_sent()) {
             session_start();
         }
@@ -37,7 +38,8 @@ class User
         $this->populateView();
     }
 
-    public function signin(array $values) {
+    public function signin(array $values): bool
+    {
         $_SESSION['user_id'] = $values['id'];
         $_SESSION['email'] = $values['email'];
         $_SESSION['name'] = $values['name'] ?? $values['email'];
@@ -59,7 +61,6 @@ class User
 
         return true;
     }
-
     public function signout(): void
     {
         $_SESSION = [];
@@ -75,7 +76,7 @@ class User
         session_destroy();
     }
 
-    public function verification(bool $isAdminVerification = false)
+    public function verification(bool $isAdminVerification = false): void
     {
         if(!$this->logged || ($isAdminVerification && !$this->isAdmin)) {
             header('location: /');
@@ -83,7 +84,7 @@ class User
         }
     }
 
-    public function hashPassword(string $password) : string
+    public function hashPassword(string $password): string
     {
         if(!$pw = password_hash($password, $this->options['password']['algo'], $this->options['password']['options'])) {
             throw new \Exception('Error while trying to hash password');
@@ -92,14 +93,14 @@ class User
         return $pw;
     }
 
-    protected function populateLoggedInUser()
+    protected function populateLoggedInUser(): void
     {
         $this->logged = true;
         $this->isAdmin = $_SESSION['isAdmin'];
         $this->id = $_SESSION['user_id'];
     }
 
-    protected function populateView()
+    protected function populateView(): void
     {
         $this->view->addVar('logged', $this->logged);
     }

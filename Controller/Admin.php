@@ -1,4 +1,4 @@
-<?php
+<?php  declare(strict_types=1);
 namespace UserPack\Controller;
 
 use Prim\AbstractController;
@@ -17,14 +17,14 @@ class Admin extends AbstractController
         $this->userModel = $userModel;
     }
 
-    public function list(int $page = 1)
+    public function list(int $page = 1): void
     {
         $this->render('admin/list', 'UserPack', [
             'users' => $this->userModel->getAllUsers()
         ]);
     }
 
-    public function show(int $user_id)
+    public function show(int $user_id): void
     {
         if (isset($_POST['submit_update_user'])) {
             $post = $_POST;

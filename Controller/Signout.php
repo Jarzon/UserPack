@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace UserPack\Controller;
 
 use Prim\AbstractController;
@@ -19,14 +19,15 @@ class Signout extends AbstractController
         $this->userModel = $userModel;
     }
 
-    public function index()
+    public function index(): void
     {
         $this->user->signout();
 
         $this->redirection();
     }
 
-    protected function redirection() {
+    protected function redirection(): void
+    {
         $this->redirect('/');
     }
 }

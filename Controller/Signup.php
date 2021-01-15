@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace UserPack\Controller;
 
 use Prim\AbstractController;
@@ -23,7 +23,7 @@ class Signup extends AbstractController
         $this->userModel = $userModel;
     }
 
-    protected function sendEmail(string $email, string $name, string $subject, string $message)
+    protected function sendEmail(string $email, string $name, string $subject, string $message): void
     {
         $transport = (new \Swift_SmtpTransport($this->options['smtp_url'], $this->options['smtp_port'], $this->options['smtp_secure']))
             ->setUsername($this->options['email'])
@@ -45,7 +45,7 @@ class Signup extends AbstractController
         }
     }
 
-    public function index()
+    public function index(): void
     {
         if ($this->signUpForm->submitted()) {
             try {
@@ -65,7 +65,7 @@ class Signup extends AbstractController
         ]);
     }
 
-    protected function submit(array $values = [])
+    protected function submit(array $values = []): bool
     {
         if(empty($values)) return false;
 
@@ -87,14 +87,14 @@ class Signup extends AbstractController
         return $this->user->signin($values);
     }
 
-    protected function welcomeEmail(array $user)
+    protected function welcomeEmail(array $user): void
     {
         $message = $this->view->fetch('email/signup', 'UserPack', ['user' => $user]);
 
         $this->sendEmail($user['email'], $values['name'] ?? $user['email'], "{$this->options['project_name']} - Signup", $message);
     }
 
-    protected function redirection()
+    protected function redirection(): void
     {
         $this->redirect('/');
     }

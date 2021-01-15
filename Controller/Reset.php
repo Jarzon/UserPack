@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace UserPack\Controller;
 
 use Jarzon\Form;
@@ -27,7 +27,7 @@ class Reset extends AbstractController
         $this->userModel = $userModel;
     }
 
-    protected function getEmailForm()
+    protected function getEmailForm(): Form
     {
         $form = new Form($_POST);
 
@@ -39,7 +39,7 @@ class Reset extends AbstractController
         return $form;
     }
 
-    protected function getPasswordForm()
+    protected function getPasswordForm(): Form
     {
         $form = new Form($_POST);
 
@@ -52,7 +52,7 @@ class Reset extends AbstractController
         return $form;
     }
 
-    protected function sendEmail(string $email, string $name, string $subject, string $message)
+    protected function sendEmail(string $email, string $name, string $subject, string $message): int
     {
         $transport = (new \Swift_SmtpTransport($this->options['smtp_url'], $this->options['smtp_port'], $this->options['smtp_secure']))
             ->setUsername($this->options['email'])
@@ -69,7 +69,7 @@ class Reset extends AbstractController
         return $mailer->send($body);
     }
 
-    public function index()
+    public function index(): void
     {
         $form = $this->getEmailForm();
 
@@ -86,12 +86,12 @@ class Reset extends AbstractController
             if($user = $this->userModel->getUserByEmail($values['email'])) {
                 $this->message('ok', 'We have sent an email to reset your password at your email address.');
 
-                $reset = bin2hex(random_bytes(10)); // 20 chars
+                $resetToken = bin2hex(random_bytes(10)); // 20 chars
 
-                $this->userModel->updateUser(['reset' => $reset], $user->id);
+                $this->userModel->updateUser(['reset' => $resetToken], $user->id);
 
                 try {
-                    $message = $this->view->fetch('email/reset', 'UserPack', ['user' => $user, 'reset' => $reset]);
+                    $message = $this->view->fetch('email/reset', 'UserPack', ['user' => $user, 'reset' => $resetToken]);
 
                     if($this->options['environment'] === 'prod') {
                         $this->sendEmail($user->email, $user->name, "{$this->options['project_name']} - Demande de réinitialisation du mot de passe", $message);
@@ -107,13 +107,13 @@ class Reset extends AbstractController
         $this->render('reset/index', 'UserPack', ['form' => $form]);
     }
 
-    public function reset($email = false, $reset = false)
+    public function reset(?string $email = null, ?string $resetToken = null): void
     {
-        if(!$email || !$reset) {
+        if($email === null || $resetToken === null) {
             $this->redirect('/');
         }
 
-        if(!$this->userModel->canResetPassword($email, $reset)) {
+        if(!$this->userModel->canResetPassword($email, $resetToken)) {
             throw new \Exception("Unmatching email/reset token");
         }
 
