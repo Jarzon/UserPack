@@ -21,7 +21,8 @@ class User
                 'options' => [
                     'cost' => 10
                 ]
-            ]
+            ],
+            'sessionExpireTime' => 30
         ];
     }
 
@@ -41,17 +42,17 @@ class User
     public function signin(array $values): bool
     {
         $_SESSION['user_id'] = $values['id'];
-        $_SESSION['email'] = $values['email'];
-        $_SESSION['name'] = $values['name'] ?? $values['email'];
+        if(isset($values['email'])) $_SESSION['email'] = $values['email'];
+        $_SESSION['name'] = $values['name'] ?? $values['email'] ?? '';
         $_SESSION['isAdmin'] = $values['isAdmin'] ?? false;
         $_SESSION['status'] = $values['status'] ?? 0;
 
-        if (isset($values['remember']) && $values['remember']) {
+        if (isset($values['remember']) && $values['remember'] && $this->options['sessionExpireTime'] !== 30) {
             $params = session_get_cookie_params();
             setcookie(
                 session_name(),
                 $_COOKIE[session_name()],
-                time() + 60 * 60 * 24 * 30 * 3,
+                time() + 60 * $this->options['sessionExpireTime'],
                 $params['path'],
                 $params['domain'],
                 ($this->options['url_protocol'] === 'https://'? true: false),

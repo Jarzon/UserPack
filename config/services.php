@@ -36,8 +36,6 @@ return [
         ];
     },
     Signout::class => function(Container $dic) {
-        $dic->get('userService')->verification();
-
         return [
             $dic->get('userService'),
             $dic->model('UserPack\UserModel')
