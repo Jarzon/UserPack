@@ -10,7 +10,7 @@
   },
   "require": {
     "php": ">=8.0.0",
-    "jarzon/prim": "~0.18.0",
+    "jarzon/prim": "~0.19.0",
     "jarzon/form": ">=1.8.0",
     "jarzon/querybuilder": ">=0.7.0",
     "robmorgan/phinx": "~0.12.0",
