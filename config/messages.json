@@ -16,7 +16,7 @@
     "Il y a u un problème, nous n'avons pas pu vous envoyer l'email."
   ],
 
-  "request reset password": ["Reset password request", "Demande réinitialisation de mot de passe"],
+  "request reset password": ["Reset password request", "Demande de réinitialisation du mot de passe"],
   "password missmatch": ["The passwords doesn't match.", "Les mots de pass ne correspondent pas"],
   "password changed": ["Your password have been changed.", "Votre mot de passe a été changé"],
   "email doesnt exist": ["We don't have that email", "Nous n'avons pas cette addresse email"],
