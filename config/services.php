@@ -10,20 +10,20 @@ return [
     },
     Signup::class => function(Container $dic) {
         return [
-            $dic->get('userService'),
+            $dic->service('UserPack\User'),
             $dic->form('UserPack\SignUpForm'),
             $dic->model('UserPack\UserModel')
         ];
     },
     Signin::class => function(Container $dic) {
         return [
-            $dic->get('userService'),
+            $dic->service('UserPack\User'),
             $dic->form('UserPack\SignInForm'),
             $dic->model('UserPack\UserModel')
         ];
     },
     Reset::class => function(Container $dic) {
-        $user = $dic->get('userService');
+        $user = $dic->service('UserPack\User');
 
         if(!$user->logged) {
             header("Location: /");
@@ -37,12 +37,12 @@ return [
     },
     Signout::class => function(Container $dic) {
         return [
-            $dic->get('userService'),
+            $dic->service('UserPack\User'),
             $dic->model('UserPack\UserModel')
         ];
     },
     Settings::class => function(Container $dic) {
-        $user = $dic->get('userService');
+        $user = $dic->service('UserPack\User');
         $user->verification();
 
         return [
@@ -51,7 +51,7 @@ return [
         ];
     },
     Admin::class => function(Container $dic) {
-        $dic->get('userService')->verification();
+        $dic->service('UserPack\User')->verification();
 
         if(!$dic->get('adminService')->isAdmin()) {
             header("HTTP/1.1 403 Forbidden");
