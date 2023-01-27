@@ -3,6 +3,12 @@ use \Prim\Container;
 use UserPack\Controller\{Admin, Reset, Settings, Signin, Signout, Signup};
 
 return [
+    \UserPack\Service\User::class => function(Container $dic) {
+        return [
+            $dic->get('view'),
+            $dic->options
+        ];
+    },
     \UserPack\Model\UserModel::class => function(Container $dic) {
         return [
             $dic->model('UserPack\UserEntity')
