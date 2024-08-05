@@ -24,14 +24,14 @@ class User
             ],
             'sessionExpireTime' => 30
         ];
+
+        if(session_status() !== PHP_SESSION_ACTIVE && !headers_sent()) {
+            session_start();
+        }
     }
 
     public function init(): void
     {
-        if(session_status() !== PHP_SESSION_ACTIVE && !headers_sent()) {
-            session_start();
-        }
-
         if(isset($_SESSION['user_id']) && $_SESSION['user_id'] > 0) {
             $this->populateLoggedInUser();
         }
