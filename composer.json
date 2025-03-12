@@ -9,14 +9,14 @@
     "bin-dir": "bin"
   },
   "require": {
-    "php": ">=8.2.0",
-    "jarzon/prim": "~0.20.0",
-    "jarzon/form": ">=1.8.0",
-    "jarzon/querybuilder": ">=0.7.0",
+    "php": ">=8.4.0",
+    "jarzon/prim": "~1.0.0",
+    "jarzon/form": ">=1.14.0",
+    "jarzon/querybuilder": ">=1.0.0",
     "robmorgan/phinx": ">=0.15.0",
     "swiftmailer/swiftmailer": ">=6.2.0"
   },
   "require-dev": {
-    "phpstan/phpstan": "^1.7.14"
+    "phpstan/phpstan": "^2.1.0"
   }
 }
