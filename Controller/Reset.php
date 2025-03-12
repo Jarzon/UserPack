@@ -107,7 +107,7 @@ class Reset extends AbstractController
         $this->render('reset/index', 'UserPack', ['form' => $form]);
     }
 
-    public function reset(?string $email = null, ?string $resetToken = null): void
+    public function reset(string|null $email = null, string|null $resetToken = null): void
     {
         if($email === null || $resetToken === null) {
             $this->redirect('/');

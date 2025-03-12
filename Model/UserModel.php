@@ -44,7 +44,7 @@ class UserModel extends \Prim\Model
         return $query->fetch();
     }
 
-    public function getUserSettings(?int $user_id = null): object|false
+    public function getUserSettings(int|null $user_id = null): object|false
     {
         $u = $this->userEntity;
 
@@ -97,7 +97,7 @@ class UserModel extends \Prim\Model
         return $this->updateUser(['status' => -1]);
     }
 
-    public function updateUser(array $post, ?int $user_id = null): int|false
+    public function updateUser(array $post, int|null $user_id = null): int|false
     {
         $u = $this->userEntity;
 
@@ -108,7 +108,7 @@ class UserModel extends \Prim\Model
         return $query->exec();
     }
 
-    public function setConnectionTime(?int $user_id = null): int|false
+    public function setConnectionTime(int|null $user_id = null): int|false
     {
         $u = $this->userEntity;
 

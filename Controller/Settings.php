@@ -14,7 +14,7 @@ class Settings extends AbstractController
     private UserModel $userModel;
 
     public function __construct(View $view, array $options,
-                                User $user = null, UserForm $userForm = null, UserModel $userModel = null)
+                                User|null $user = null, UserForm|null $userForm = null, UserModel|null $userModel = null)
     {
         parent::__construct($view, $options);
 
