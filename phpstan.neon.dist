@@ -1,13 +1,16 @@
 parameters:
-    level: 5
-    checkMissingIterableValueType: false
+    level: 6
+    scanFiles:
+        - %currentWorkingDirectory%/app/Functions/global.php
     paths:
-        - %currentWorkingDirectory%/
-    excludes_analyse:
-        - %currentWorkingDirectory%/assets/*
-        - %currentWorkingDirectory%/config/*
-        - %currentWorkingDirectory%/phinx/*
-        - %currentWorkingDirectory%/view/*
-        - %currentWorkingDirectory%/Tests/*
-        - %currentWorkingDirectory%/bin/*
-        - %currentWorkingDirectory%/vendor/*
+        - %currentWorkingDirectory%/src/
+    excludePaths:
+        - %currentWorkingDirectory%/src/*/assets/*
+        - %currentWorkingDirectory%/src/*/config/*
+        - %currentWorkingDirectory%/src/*/migrations/*
+        - %currentWorkingDirectory%/src/*/seeds/*
+        - %currentWorkingDirectory%/src/*/view/*
+        - %currentWorkingDirectory%/src/*/Tests/*
+
+includes:
+    - vendor/phpstan/phpstan/conf/bleedingEdge.neon
