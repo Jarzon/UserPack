@@ -91,7 +91,7 @@ class Signup extends AbstractController
     {
         $message = $this->view->fetch('email/signup', 'UserPack', ['user' => $user]);
 
-        $this->sendEmail($user['email'], $values['name'] ?? $user['email'], "{$this->options['project_name']} - Signup", $message);
+        $this->sendEmail($user['email'], $user['name'] ?? $user['email'], "{$this->options['project_name']} - Signup", $message);
     }
 
     protected function redirection(): void

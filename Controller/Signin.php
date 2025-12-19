@@ -13,9 +13,13 @@ class Signin extends AbstractController
     private SignInForm $signInForm;
     private UserModel $userModel;
 
-    public function __construct(View $view, array $options,
-                                User $user, SignInForm $signInForm, UserModel $userModel)
-    {
+    public function __construct(
+        View $view,
+        array $options,
+        User $user,
+        SignInForm $signInForm,
+        UserModel $userModel
+    ) {
         parent::__construct($view, $options);
 
         $this->user = $user;
@@ -49,7 +53,7 @@ class Signin extends AbstractController
 
         $infos = $this->userModel->getUserByEmail($values['email']);
 
-        if (isset($infos) || !password_verify($values['password'], $infos->password)) {
+        if (empty($infos) || !password_verify($values['password'], $infos->password)) {
             $this->message('error', 'wrong password or username');
             return false;
         }

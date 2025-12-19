@@ -9,13 +9,18 @@ use UserPack\Service\User;
 
 class Settings extends AbstractController
 {
+    /** @phpstan-ignore-next-line   */
     private User $user;
     private UserForm $userForm;
     private UserModel $userModel;
 
-    public function __construct(View $view, array $options,
-                                User|null $user = null, UserForm|null $userForm = null, UserModel|null $userModel = null)
-    {
+    public function __construct(
+        View $view,
+        array $options,
+        User|null $user = null,
+        UserForm|null $userForm = null,
+        UserModel|null $userModel = null
+    ) {
         parent::__construct($view, $options);
 
         if($user) $this->user = $user;

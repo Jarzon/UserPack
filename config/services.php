@@ -43,8 +43,7 @@ return [
     },
     Signout::class => function(Container $dic) {
         return [
-            $dic->service('UserPack\User'),
-            $dic->model('UserPack\UserModel')
+            $dic->service('UserPack\User')
         ];
     },
     Settings::class => function(Container $dic) {
