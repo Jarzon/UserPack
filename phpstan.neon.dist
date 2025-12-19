@@ -1,16 +1,15 @@
 parameters:
-    level: 6
-    scanFiles:
-        - %currentWorkingDirectory%/app/Functions/global.php
+    level: 4
     paths:
-        - %currentWorkingDirectory%/src/
+        - %currentWorkingDirectory%/
     excludePaths:
-        - %currentWorkingDirectory%/src/*/assets/*
-        - %currentWorkingDirectory%/src/*/config/*
-        - %currentWorkingDirectory%/src/*/migrations/*
-        - %currentWorkingDirectory%/src/*/seeds/*
-        - %currentWorkingDirectory%/src/*/view/*
-        - %currentWorkingDirectory%/src/*/Tests/*
+        - %currentWorkingDirectory%/vendor/*
+        - %currentWorkingDirectory%/assets/*
+        - %currentWorkingDirectory%/config/*
+        - %currentWorkingDirectory%/migrations/*
+        - %currentWorkingDirectory%/seeds/*
+        - %currentWorkingDirectory%/view/*
+        - %currentWorkingDirectory%/Tests/*
 
 includes:
     - vendor/phpstan/phpstan/conf/bleedingEdge.neon
