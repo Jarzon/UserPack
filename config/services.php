@@ -17,6 +17,7 @@ return [
     Signup::class => function(Container $dic) {
         return [
             $dic->service('UserPack\User'),
+            $dic->service('localizationService'),
             $dic->form('UserPack\SignUpForm'),
             $dic->model('UserPack\UserModel')
         ];

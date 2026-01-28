@@ -2,6 +2,7 @@
 namespace UserPack\Controller;
 
 use Jarzon\Form;
+use Jarzon\Localization;
 use Jarzon\ValidationException;
 use Prim\AbstractController;
 use Prim\View;
@@ -10,21 +11,19 @@ use UserPack\Service\User;
 
 class Reset extends AbstractController
 {
-    private User $user;
-    private UserModel $userModel;
-
-    public function __construct(View $view, array $options,
-                                User $user, UserModel $userModel)
-    {
+    public function __construct(
+        View $view,
+        array $options,
+        protected User $user,
+        private Localization $localization,
+        protected UserModel $userModel
+    ) {
         $options += [
             'userpack_pwmin' => 6,
             'userpack_pwmax' => 250
         ];
 
         parent::__construct($view, $options);
-
-        $this->user = $user;
-        $this->userModel = $userModel;
     }
 
     protected function getEmailForm(): Form
@@ -32,7 +31,8 @@ class Reset extends AbstractController
         $form = new Form($_POST);
 
         $form
-            ->email('email')->required()
+            ->email('email')
+                ->required()
 
             ->submit();
 
@@ -44,8 +44,14 @@ class Reset extends AbstractController
         $form = new Form($_POST);
 
         $form
-            ->password('password1')->min($this->options['userpack_pwmin'])->max($this->options['userpack_pwmax'])->required()
-            ->password('password2')->min($this->options['userpack_pwmin'])->max($this->options['userpack_pwmax'])->required()
+            ->password('password1')
+                ->min($this->options['userpack_pwmin'])
+                ->max($this->options['userpack_pwmax'])
+                ->required()
+            ->password('password2')
+                ->min($this->options['userpack_pwmin'])
+                ->max($this->options['userpack_pwmax'])
+                ->required()
 
             ->submit();
 
@@ -94,7 +100,12 @@ class Reset extends AbstractController
                     $message = $this->view->fetch('email/reset', 'UserPack', ['user' => $user, 'reset' => $resetToken]);
 
                     if($this->options['environment'] === 'prod') {
-                        $this->sendEmail($user->email, $user->name, "{$this->options['project_name']} - Demande de réinitialisation du mot de passe", $message);
+                        $this->sendEmail(
+                            $user->email,
+                            $user->name,
+                            $this->localization->translate("%s - Password reset request", [$this->options['project_name']]),
+                            $message
+                        );
                     }
                 } catch(\Exception $e) {
                     $this->message('alert', 'password reset email error');

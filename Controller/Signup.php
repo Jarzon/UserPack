@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 namespace UserPack\Controller;
 
+use Jarzon\Localization;
 use Prim\AbstractController;
 use Prim\View;
 use UserPack\Form\SignUpForm;
@@ -9,18 +10,15 @@ use UserPack\Service\User;
 
 class Signup extends AbstractController
 {
-    private User $user;
-    private SignUpForm $signUpForm;
-    private UserModel $userModel;
-
-    public function __construct(View $view, array $options,
-                                User $user, SignUpForm $signUpForm, UserModel $userModel)
-    {
+    public function __construct(
+        View $view,
+        array $options,
+        private User $user,
+        private Localization $localization,
+        private SignUpForm $signUpForm,
+        private UserModel $userModel
+    ) {
         parent::__construct($view, $options);
-
-        $this->user = $user;
-        $this->signUpForm = $signUpForm;
-        $this->userModel = $userModel;
     }
 
     protected function sendEmail(string $email, string $name, string $subject, string $message): void
@@ -91,7 +89,12 @@ class Signup extends AbstractController
     {
         $message = $this->view->fetch('email/signup', 'UserPack', ['user' => $user]);
 
-        $this->sendEmail($user['email'], $user['name'] ?? $user['email'], "{$this->options['project_name']} - Signup", $message);
+        $this->sendEmail(
+            $user['email'],
+            $user['name'] ?? $user['email'],
+            $this->localization->translate("%s - Signup", [$this->options['project_name']]),
+            $message
+        );
     }
 
     protected function redirection(): void

@@ -13,6 +13,7 @@
     "jarzon/prim": "~1.0.0",
     "jarzon/form": ">=1.14.0",
     "jarzon/querybuilder": ">=1.0.0",
+    "jarzon/localization": "~0.4.0",
     "robmorgan/phinx": ">=0.15.0",
     "swiftmailer/swiftmailer": ">=6.3.0"
   },

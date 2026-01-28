@@ -2,6 +2,7 @@
   "sign up": ["Register", "Inscription"],
   "sign in": ["Sign in", "Connexion"],
   "sign out": ["Sign out", "Déconnexion"],
+  "%s - Signup": ["%s - Signup", "%s - Inscription"],
   "settings": ["Settings", "Configurations"],
 
   "users": ["Users", "Utilisateurs"],
@@ -11,6 +12,7 @@
   "remember me": ["Keep me signed in", "Rester connecté"],
   "reenter password": ["Reenter password", "Retaper le mot de passe"],
   "set new password": ["Set new password", "Définir le nouveau mot de passe"],
+  "%s - Password reset request": ["%s - Password reset request", "%s - Demande de réinitialisation du mot de passe"],
   "password reset email error": [
     "Something went wrong, we couldn't send you the email.",
     "Il y a u un problème, nous n'avons pas pu vous envoyer l'email."
