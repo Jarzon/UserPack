@@ -14,9 +14,9 @@ class Reset extends AbstractController
     public function __construct(
         View $view,
         array $options,
-        protected User $user,
+        private User $user,
         private Localization $localization,
-        protected UserModel $userModel
+        private UserModel $userModel
     ) {
         $options += [
             'userpack_pwmin' => 6,
